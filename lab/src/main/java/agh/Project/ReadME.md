@@ -1,4 +1,5 @@
 # <b>Project Name: Unchosen <i> yet</i></b>
+For now files within lab structure. will mvoe if advised
 ## ideas within project:
     1. calculator for playable character (PC) sheet
     2. generator of non playable characters (NPC's)
