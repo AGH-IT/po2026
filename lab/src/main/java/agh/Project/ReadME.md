@@ -14,11 +14,12 @@ For now files within lab structure. will mvoe if advised
         a. typing of chest (weaponry,magic,food etc.)
         b. size of chest (small, medium, large)
         c. rarity of chest (common -> uncommon -> rare->...)
+    5. A system of Rolling Dices for any thing needed.
 ## Procjet Team + tasks done
-|Name|Position|Tasks|
-|---|:---:|---|
-|Wiktor Kasprzak|Project Lead| Unassigned|
-|free space|||
+|Name|Position|Tasks|done parts|
+|---|:---:|---|---|
+|Wiktor Kasprzak|Project Lead| Unassigned||
+|free space||||
 
 ## Rules for project use
  TO SET
