@@ -1,5 +1,5 @@
 package agh.po.lab2;
-import agh.Testowe.Skan;
+import agh.Project.Wiktor.Skan;
 import java.util.ArrayList;
 import java.util.Random;
 public class Lotto2 {

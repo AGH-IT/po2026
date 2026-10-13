@@ -1,5 +1,5 @@
 
-package agh.Testowe;
+package agh.Project.Wiktor;
 
 import java.util.Scanner;
 

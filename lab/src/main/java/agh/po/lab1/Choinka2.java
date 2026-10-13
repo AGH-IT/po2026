@@ -1,5 +1,5 @@
 package agh.po.lab1;
-import agh.Testowe.Skan;
+import agh.Project.Wiktor.Skan;
 public class Choinka2 {
     public static void main(String[] args){
         int rozmiar = Skan.readNumber();
