@@ -5,7 +5,7 @@ public class Main{
         System.out.println("Hello, World! ");
 
         if(args.length <= 0){
-            System.out.println("Podaj argument");
+            System.out.println("Podaj argument!!");
         }
         else{
             try{

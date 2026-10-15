@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class Lotto {
     public static void main(String[] args){
-        System.out.println(args);
         Random rand = new Random();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         while (numbers.size()<6){
