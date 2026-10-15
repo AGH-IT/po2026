@@ -1,3 +1,5 @@
+package agh.po.lab1;
+
 public class treenew{
 
     public static void main(String[] args){

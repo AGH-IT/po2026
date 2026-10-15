@@ -1,3 +1,5 @@
+package agh.po.lab1;
+
 public class tree {
     public static void main(String[] args){
         int h = 10;
