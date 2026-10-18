@@ -14,7 +14,7 @@ public class Lotto {public static void main(String[] args){
         boolean jest = numbers.contains(a);
 
         if(jest != true){
-            //numbers.remove(a);
+            //numbers.aaremove(a);
             //a = r.nextInt(50);
             numbers.add(a);
             i++;
