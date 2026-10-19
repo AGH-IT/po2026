@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Test {
+public class Roll {
     static Random random = new Random();
     static List<Integer> list = new ArrayList<>();
     public List<Integer> getlist() {
