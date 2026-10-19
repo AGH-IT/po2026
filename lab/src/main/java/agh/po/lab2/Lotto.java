@@ -9,7 +9,7 @@ public class Lotto {
         ArrayList<Integer> lista = new ArrayList<>();
         Random generator = new Random();
 
-        for(int i=0; lista.size()<=5; i++) {
+        for (int i = 0; lista.size() <= 5; i++) {
             int l = generator.nextInt(49);
             boolean jest = lista.contains(l);
             if (jest == false) {
@@ -18,13 +18,38 @@ public class Lotto {
         }
         System.out.println(lista);
 
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Podaj swoje liczby: ");
-
+        ArrayList<Integer> strzaly = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-
+            strzaly.add(Integer.parseInt((args[i])));
         }
+        System.out.println(strzaly);
 
+        int trafy = 0;
+        for (int i = 0; i < 6; i++) {
+            if (lista.contains(strzaly.get(i)) == true) {
+                trafy++;
+            }
+        }
+        System.out.println("Liczba trafień: " + trafy);
 
+        ArrayList<Integer> lista1 = new ArrayList<>();
+        while (trafy != 6) {
+            lista1.clear();
+            Random generator1 = new Random();
+            for (int i = 0; lista1.size() <= 5; i++) {
+                int l = generator1.nextInt(49);
+                boolean jest = lista1.contains(l);
+                if (jest == false) {
+                    lista1.add(l);
+                }
+            }
+            trafy = 0;
+            for (int i = 0; i < 6; i++) {
+                if (lista1.contains(strzaly.get(i)) == true) {
+                    trafy++;
+                }
+            }
+            System.out.println(lista1);
+        }
     }
 }
