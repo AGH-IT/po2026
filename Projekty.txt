@@ -93,6 +93,6 @@ Kategoria D: Systemy specjalistyczne i domenowe (Idealne na diagramy przypadków
 40) System Ewidencji i Konserwacji Sprzętu Przemysłowego (Maintenance Management): Harmonogram przeglądów prewencyjnych, historia usterek, żywotność części zamiennych.
 
 Kategoria E: Propozycje własne studentów.
-1) Wektorowa baza danych: Przechowywanie danych w postaci wektorów, wykonywanie operacji na tych wektorach (wyszukiwanie, dodawanie itd.) oraz zapis danych na później
+1) Wektorowa baza danych: Przechowywanie danych w postaci wektorów, wykonywanie operacji na tych wektorach (wyszukiwanie, dodawanie itd.) oraz zapis danych na później. Piotr Trybała
 
 (Miejsce na własne tematy - dopiszcie temat i swoje imiona i nazwiska poniżej, zgodnie z zasadami zapisu z README.md)
