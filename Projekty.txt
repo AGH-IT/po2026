@@ -23,7 +23,7 @@ Kategoria A: Symulacje procesów i systemów (wysoki potencjał na polimorfizm)
 8) System Sterowania Szklarnią: Automatyczne nawadnianie, oświetlenie i wentylacja w zależności od odczytów czujników i rodzaju uprawy.
 
 9) Symulator Toru Wyścigowego: Model okrążeń, zużycia opon/paliwa, strategii pit-stopów i klasyfikacji zawodników na mecie.
-
+Wiktor Gucwa, Karol Kantor
 10) System Zarządzania Schroniskiem Górskim: Rezerwacje miejsc noclegowych, zaopatrzenie w zapasy, prognoza pogody i zamykanie szlaków w razie zagrożenia.
 
 Kategoria B: Tematy bardziej techniczne (sieci, systemy, niższy poziom)
