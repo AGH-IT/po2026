@@ -38,7 +38,7 @@ Kategoria B: Tematy bardziej techniczne (sieci, systemy, niższy poziom)
 
 15) System Kolejkowania Zadań (Task Scheduler): Kolejka zadań z priorytetami, pula wątków roboczych (worker threads) i obsługa zależności między zadaniami.
 
-16) Symulator Systemu Plików: Struktura drzewa katalogów/plików w pamięci, operacje (utwórz, usuń, przenieś, prawa dostępu) i serializacja całej struktury do pliku.
+16) Symulator Systemu Plików: Struktura drzewa katalogów/plików w pamięci, operacje (utwórz, usuń, przenieś, prawa dostępu) i serializacja całej struktury do pliku. - Krzysztof Marchewka, Bartosz Noworyta
 
 17) Silnik Reguł Biznesowych (Rule Engine): System ewaluujący konfigurowalny zestaw reguł (warunek -> akcja) nad strumieniem zdarzeń wejściowych.
 
