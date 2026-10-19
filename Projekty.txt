@@ -8,7 +8,7 @@ Kategoria A: Symulacje procesów i systemów (wysoki potencjał na polimorfizm)
 
 1) Symulator Elektrowni Wirtualnej (Virtual Power Plant): Agregacja rozproszonych źródeł energii (panele, wiatraki, magazyny) i bilansowanie produkcji z zapotrzebowaniem w czasie.
 
-2) System Zarządzania Ulem Pszczelim: Monitorowanie kolonii (temperatura, wilgotność, zapasy miodu), harmonogram przeglądów i alerty o rojeniu.
+2) System Zarządzania Ulem Pszczelim: Monitorowanie kolonii (temperatura, wilgotność, zapasy miodu), harmonogram przeglądów i alerty o rojeniu. Amelia Smosna, Martyna Kot
 
 3) Symulator Sortowni Paczek: Taśmociąg z czujnikami, sortowanie paczek według wagi/kierunku/priorytetu na odpowiednie rampy.
 
