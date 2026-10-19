@@ -18,11 +18,11 @@ public class Rollset {
         list.sort(null);
         return list;
     }
-    public List<Integer> getliststiff(int input)   {
-        Dicepack.getDicesstiff(input);
-        for (int x=1; x<=Dicepack.dices.size();x++){
-            int index = random.nextInt(Dicepack.dices.size());
-            liststiff.add(Dice.rollNumber(Dicepack.dices.get(index)));
+    public static List<Integer> getliststiff(int input,int input2)   {
+        Dicepack.getDicesstiff(input,input2);
+        for (int x=1; x<=Dicepack.dicesstiff.size();x++){
+            int index = random.nextInt(Dicepack.dicesstiff.size());
+            liststiff.add(Dice.rollNumber(Dicepack.dicesstiff.get(index)));
             //System.out.println(Dice.rollNumber(Dicepack.dices.get(index)));
         }
         liststiff.sort(null);

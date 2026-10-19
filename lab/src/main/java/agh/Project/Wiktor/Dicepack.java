@@ -14,9 +14,9 @@ public class Dicepack {
         }
         return dices;
     }
-    public static List<Integer> getDicesstiff(int ile) {
+    public static List<Integer> getDicesstiff(int ile,int jakie) {
         for (int i = 1; i <=ile ; i++) {
-            dicesstiff.add(Dice.ask());
+            dicesstiff.add(jakie);
         }
         return dicesstiff;
     }

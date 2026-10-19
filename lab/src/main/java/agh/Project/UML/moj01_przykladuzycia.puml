@@ -1,0 +1,25 @@
+@startuml
+'not included
+header jak to działa
+footer page1
+title Przykład działania
+start
+if (condition?) is (yes) then
+  :true;
+  if (condition?) is (yes) then
+    :true;
+    stop
+  else (no)
+    :false;
+  endif
+  stop
+else (no)
+  :false;
+  while (data available?)
+    :read data;
+  endwhile
+  stop
+endif
+
+
+@enduml

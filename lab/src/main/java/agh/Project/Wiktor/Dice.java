@@ -1,7 +1,6 @@
 package agh.Project.Wiktor;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static agh.Project.Wiktor.Skan.readNumber;
