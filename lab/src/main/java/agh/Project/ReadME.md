@@ -18,7 +18,7 @@ For now files within lab structure. will mvoe if advised
 ## Procjet Team + tasks done
 |Name|Position|Tasks|done parts|
 |---|:---:|---|---|
-|Wiktor Kasprzak|Project Lead| Unassigned||
+|Wiktor Kasprzak|Project Lead| 5||
 |free space||||
 
 ## Rules for project use
