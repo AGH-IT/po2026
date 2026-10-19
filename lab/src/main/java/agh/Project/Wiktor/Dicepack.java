@@ -13,6 +13,12 @@ public class Dicepack {
         }
         return dices;
     }
+    public static List<Integer> getDicesstiff(int ile) {
+        for (int i = 1; i <=ile ; i++) {
+            dices.add(Dice.ask());
+        }
+        return dices;
+    }
     public static void main(String[] args) {
         System.out.println("Welcome to the Dicepack!");
         System.out.print("How many dices do you want to roll?:");
