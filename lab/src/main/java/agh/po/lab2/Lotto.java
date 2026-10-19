@@ -47,6 +47,10 @@ public class Lotto {
             for (int i = 0; i < 6; i++) {
                 if (lista1.contains(strzaly.get(i)) == true) {
                     trafy++;
+                    if (trafy == 6) {
+                        System.out.println("Gratulacje! Trafiłeś 6/6");
+                        break;
+                    }
                 }
             }
             System.out.println(lista1);
