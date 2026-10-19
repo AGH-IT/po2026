@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Roll {
+public class Rollset {
     static Random random = new Random();
     static List<Integer> list = new ArrayList<>();
     static List<Integer> liststiff = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Roll {
             //System.out.println(Dice.rollNumber(Dicepack.dices.get(index)));
         }
         list.sort(null);
-        System.out.print("your rolls:");
+        System.out.print("your dices:");
         System.out.println(list);
     }
 }
