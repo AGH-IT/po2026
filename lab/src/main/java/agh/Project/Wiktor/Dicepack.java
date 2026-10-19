@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Dicepack {
     public static List<Integer> dices = new ArrayList<>();
+    public static List<Integer> dicesstiff = new ArrayList<>();
     public static List<Integer> getDices() {
         System.out.print("How many dices do you want to roll?:");
         int ile = Skan.readNumber();
@@ -15,9 +16,9 @@ public class Dicepack {
     }
     public static List<Integer> getDicesstiff(int ile) {
         for (int i = 1; i <=ile ; i++) {
-            dices.add(Dice.ask());
+            dicesstiff.add(Dice.ask());
         }
-        return dices;
+        return dicesstiff;
     }
     public static void main(String[] args) {
         System.out.println("Welcome to the Dicepack!");
