@@ -4,44 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static agh.Project.Wiktor.Skan.readNumber;
-
 public class Test {
-
-    static ArrayList<String> outcomes =
-            new ArrayList<>(List.of("win", "draw", "loss"));
-
     static Random random = new Random();
-
-    public static int ask() {
-        System.out.println("What dice do you want to roll: d");
-        int choice = readNumber();
-        return choice;
-    }
-
-    public static ArrayList<Integer> createoutcomes(int choice) {
-        ArrayList<Integer> outcomes = new ArrayList<>();
-
-        for (int i = 1; i <= choice; i++) {
-            outcomes.add(i);
-        }
-
-        return outcomes;
-    }
-
-    public static int rollNumber(int choice) {
-        ArrayList<Integer> dice = createoutcomes(choice);
-
-        int index = random.nextInt(dice.size());
-
-        return dice.get(index);
-    }
-
+    static List<Integer> list = new ArrayList<>();
     public static void main(String[] args) {
-        int choice = ask();
-
-        int result = rollNumber(choice);
-
-        System.out.println("Rolled: " + result);
+        Dicepack.getDices();
+        for (int x=1; x<=Dicepack.dices.size();x++){
+            int index = random.nextInt(Dicepack.dices.size());
+            list.add(Dice.rollNumber(Dicepack.dices.get(index)));
+            //System.out.println(Dice.rollNumber(Dicepack.dices.get(index)));
+        }
+        list.sort(null);
+        System.out.print("your rolls:");
+        System.out.println(list);
     }
 }
