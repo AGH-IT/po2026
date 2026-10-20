@@ -89,7 +89,7 @@ Paulina Miszka, Natalie Bochenska
 38) System Planowania Produkcji Filmowej (Call Sheet Manager): Harmonogram zdjęciowy, dostępność aktorów/ekipy, lokacje i zależności między scenami.
 
 39) System Zarządzania Programem Lojalnościowym Wielopoziomowym: Naliczanie punktów z różnych źródeł, progi poziomów, wygasanie punktów i katalog nagród.
-
+Aleksandra Węgrzyn, Magdalena Kowalska
 40) System Ewidencji i Konserwacji Sprzętu Przemysłowego (Maintenance Management): Harmonogram przeglądów prewencyjnych, historia usterek, żywotność części zamiennych.
 
 Kategoria E: Propozycje własne studentów.
