@@ -1,5 +1,6 @@
 # po2026
 Repozytorium dla przedmiotu Programowanie Obiektowe.
+# Project na zaliczenie ćwiczeń
 
 ### Termin deklaracji projektu - 15.12.2026
 ### Termin oddania (push do repo) projektu - 27.01.2027
