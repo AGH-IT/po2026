@@ -67,7 +67,7 @@ Kategoria C: Gry i rozrywka (najciekawsze na diagramy sekwencji)
 28) Gra Karciana Deckbuilding (np. w stylu Dominion): Budowanie talii w trakcie gry, fazy tur, efekty kart wzajemnie na siebie oddziałujące.
 
 29) System Generowania Losowych Lochów (Procedural Dungeon Generator): Algorytm generujący połączone pomieszczenia i korytarze, rozmieszczenie przeciwników/skarbów według reguł.
-
+Jakub Kłucjasz, Bartosz Skowroński
 30) Gra Logiczna Puzzle z Mechaniką Grawitacji (np. typu "2048" lub "Match-3"): Plansza z klockami, reguły łączenia/znikania, system punktacji i poziom trudności.
 
 Kategoria D: Systemy specjalistyczne i domenowe (Idealne na diagramy przypadków użycia)
