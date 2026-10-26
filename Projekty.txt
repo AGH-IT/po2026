@@ -81,7 +81,7 @@ Kategoria D: Systemy specjalistyczne i domenowe (Idealne na diagramy przypadków
 34) System Ewidencji Sprzętu Wypożyczanego na Uczelni (np. sprzęt AV, laboratoryjny): Rezerwacje, stan techniczny, protokoły wydania/zwrotu i kary za zniszczenia.
 Paulina Miszka, Natalie Bochenska
 35) System Zarządzania Wydarzeniem Festiwalowym (Line-up i sceny): Harmonogram wielu scen równolegle, konflikty czasowe artystów, akredytacje i strefy dostępu.
-
+Mateusz Szymkiewicz, Kamil Kwiatkowski
 36) System Obsługi Zgłoszeń Awarii Miejskiej Infrastruktury (np. oświetlenie, wodociągi): Zgłoszenia mieszkańców, przydział ekip technicznych, priorytetyzacja według typu awarii.
 Grzegorz Scencelewicz, Bartosz Gąsior
 37) System Zarządzania Cyfrowym Archiwum Dokumentów: Wersjonowanie dokumentów, uprawnienia dostępu na poziomie działów, wyszukiwanie pełnotekstowe metadanych.
