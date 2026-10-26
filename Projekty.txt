@@ -83,7 +83,7 @@ Paulina Miszka, Natalie Bochenska
 35) System Zarządzania Wydarzeniem Festiwalowym (Line-up i sceny): Harmonogram wielu scen równolegle, konflikty czasowe artystów, akredytacje i strefy dostępu.
 
 36) System Obsługi Zgłoszeń Awarii Miejskiej Infrastruktury (np. oświetlenie, wodociągi): Zgłoszenia mieszkańców, przydział ekip technicznych, priorytetyzacja według typu awarii.
-
+Grzegorz Scencelewicz, Bartosz Gąsior
 37) System Zarządzania Cyfrowym Archiwum Dokumentów: Wersjonowanie dokumentów, uprawnienia dostępu na poziomie działów, wyszukiwanie pełnotekstowe metadanych.
 
 38) System Planowania Produkcji Filmowej (Call Sheet Manager): Harmonogram zdjęciowy, dostępność aktorów/ekipy, lokacje i zależności między scenami.
