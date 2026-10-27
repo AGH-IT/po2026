@@ -20,7 +20,7 @@ Kategoria A: Symulacje procesów i systemów (wysoki potencjał na polimorfizm)
 
 7) Symulator Kopalni Odkrywkowej: Zarządzanie flotą koparek i wywrotek, harmonogram wydobycia i transportu urobku między punktami.
 
-8) System Sterowania Szklarnią: Automatyczne nawadnianie, oświetlenie i wentylacja w zależności od odczytów czujników i rodzaju uprawy.
+8) System Sterowania Szklarnią: Automatyczne nawadnianie, oświetlenie i wentylacja w zależności od odczytów czujników i rodzaju uprawy. Kacper Mrzygłód, Piotr Gontarz
 
 9) Symulator Toru Wyścigowego: Model okrążeń, zużycia opon/paliwa, strategii pit-stopów i klasyfikacji zawodników na mecie.
 Wiktor Gucwa, Karol Kantor
