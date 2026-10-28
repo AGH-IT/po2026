@@ -15,7 +15,7 @@ Kategoria A: Symulacje procesów i systemów (wysoki potencjał na polimorfizm)
 4) Model Reaktora Chemicznego (uproszczony): Kontrola temperatury, ciśnienia i stężenia reagentów z regułami bezpieczeństwa i alarmami.
 
 5) Symulator Śluzy Wodnej na Kanale: Sterowanie poziomem wody, kolejką statków oczekujących i sekwencją otwierania wrót.
-
+Jan Ryszka, Gracjan Stawarczyk
 6) System Zarządzania Chłodnią Magazynową: Strefy o różnej temperaturze, monitoring towarów wrażliwych (żywność, leki) i alarmy przy przekroczeniu progów.
 
 7) Symulator Kopalni Odkrywkowej: Zarządzanie flotą koparek i wywrotek, harmonogram wydobycia i transportu urobku między punktami.
