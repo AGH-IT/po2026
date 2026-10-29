@@ -31,7 +31,7 @@ Kategoria B: Tematy bardziej techniczne (sieci, systemy, niższy poziom)
 11) Mini Serwer HTTP: Własna implementacja serwera obsługującego żądania GET/POST, routing ścieżek i serwowanie plików statycznych (biblioteka gniazd/Sockets, bez frameworków webowych).
 
 12) Rozproszony Czat Klient-Serwer: Komunikacja wielu klientów przez gniazda sieciowe, pokoje rozmów, obsługa rozłączeń i historii wiadomości.
-
+Hubert Czajkowski, Bartłomiej Kupiec 
 13) Symulator Sieci Komputerowej: Model węzłów i łączy, implementacja prostego algorytmu routingu (np. najkrótsza ścieżka) i wizualizacja przepływu pakietów.
 
 14) Mini Baza Danych typu Key-Value Store: Przechowywanie danych klucz-wartość z indeksowaniem, zapisem trwałym do pliku (Write-Ahead Log) i prostym językiem zapytań.
