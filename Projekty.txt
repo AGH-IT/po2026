@@ -98,3 +98,6 @@ Wiktor Kasprzak, [miejsce wolne]
 (Miejsce na własne tematy - dopiszcie temat i swoje imiona i nazwiska poniżej, zgodnie z zasadami zapisu z README.md)
 
 System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
+
+
+Gra Symulacyjna Dyspozytorni Komunikacji Miejskiej (DisKrak) : Symulator ruchu w czasie rzeczywistym, zarządzanie flotą i kadrą kierowców z tachografem, kreator przystanków i linii tymczasowych, modularny system wypadków, grywalizacja nastrojów dzielnic, asystent z kartami decyzyjnymi oraz analityka słupkowa - Karol Machnik, Hubert Śliwa
