@@ -101,3 +101,6 @@ System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
 
 
 Gra Symulacyjna Dyspozytorni Komunikacji Miejskiej (DisKrak) : Symulator ruchu w czasie rzeczywistym, zarządzanie flotą i kadrą kierowców z tachografem, kreator przystanków i linii tymczasowych, modularny system wypadków, grywalizacja nastrojów dzielnic, asystent z kartami decyzyjnymi oraz analityka słupkowa - Karol Machnik, Hubert Śliwa
+
+System Wykrywania i Analizy Zagrożeń Bezpieczeństwa (Mini SIEM): Analiza logów systemowych i sieciowych, wykrywanie podejrzanych aktywności na podstawie konfigurowalnych reguł (np. wielokrotne nieudane logowania), generowanie alertów oraz prezentacja historii zdarzeń i statystyk bezpieczeństwa - Konrad Rzemieniec, Krzysztof Mrowiec
+
