@@ -1,4 +1,4 @@
-package agh.po.Lab4;
+package agh.po.Lab4.animals;
 
 public class Animal {
 }

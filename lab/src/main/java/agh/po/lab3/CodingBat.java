@@ -1,5 +1,8 @@
 package agh.po.lab3;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CodingBat {
 
     public static void main(String[] args)
@@ -46,9 +49,30 @@ public class CodingBat {
         return counter;
     }
 
-    public String makeOutWord(String out, String word) {
+    public String makeOutWord(String out, String word)
+    {
+
         return(out.substring(0,2) + word + out.substring(2,4));
     }
+
+    public Map<String, String> mapAB(Map<String, String> map) {
+        if (map.containsKey("a") && map.containsKey("b"))
+        {
+            map.put("ab", map.get("a") + map.get("b"));
+        }
+        return map;
+    }
+
+    public Map<String, Integer> wordLen(String[] strings) {
+        Map<String, Integer> map2 = new HashMap<String, Integer>();
+        for (String s : strings)
+        {
+            map2.put(s,s.length());
+        }
+        return map2;
+    }
+
+
 
 
 

@@ -1,5 +1,8 @@
 package agh.po.lab3;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class CodingBatTest {
@@ -32,4 +35,40 @@ public class CodingBatTest {
         assertEquals("<<WooHoo>>", cb.makeOutWord("<<>>", "WooHoo"));
         assertEquals("[[wneka]]", cb.makeOutWord("[[]]", "wneka"));
     }
+
+    @org.junit.Test
+    public void testMapAB() {
+
+        Map<String, String> map1 = new HashMap<>(Map.of("a", "Hi", "b", "There"));
+        Map<String, String> expected1 = Map.of("a", "Hi", "ab", "HiThere", "b", "There");
+        assertEquals(expected1, cb.mapAB(map1));
+
+        Map<String, String> map2 = new HashMap<>(Map.of("a", "Hi"));
+        Map<String, String> expected2 = Map.of("a", "Hi");
+        assertEquals(expected2, cb.mapAB(map2));
+
+        Map<String, String> map3 = new HashMap<>(Map.of("b", "There"));
+        Map<String, String> expected3 = Map.of("b", "There");
+        assertEquals(expected3, cb.mapAB(map3));
+    }
+
+    @org.junit.Test
+    public void testWordLen() {
+
+        assertEquals(
+                Map.of("bb", 2, "a", 1),
+                cb.wordLen(new String[]{"a", "bb", "a", "bb"})
+        );
+
+        assertEquals(
+                Map.of("that", 4, "and", 3, "this", 4),
+                cb.wordLen(new String[]{"this", "and", "that", "and"})
+        );
+
+        assertEquals(
+                Map.of("code", 4, "bug", 3),
+                cb.wordLen(new String[]{"code", "code", "code", "bug"})
+        );
+    }
+
 }
