@@ -103,3 +103,5 @@ System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
 Gra Symulacyjna Dyspozytorni Komunikacji Miejskiej (DisKrak) : Symulator ruchu w czasie rzeczywistym, zarządzanie flotą i kadrą kierowców z tachografem, kreator przystanków i linii tymczasowych, modularny system wypadków, grywalizacja nastrojów dzielnic, asystent z kartami decyzyjnymi oraz analityka słupkowa - Karol Machnik, Hubert Śliwa
 
 Wektorowa baza danych (Chonker) : baza danych do przechowywania danych różnego rodzaju (tekstu, obrazów, dźwięków itd.) w postaci osadzeń (embedding) w celu łatwiejszego i szybszego wyszukiwania treści, modularność modeli do generowania osadzeń, zarządzanie użytkownikami i uprawnieniami - Piotr Trybała, indywidualnie
+
+Komunikator tekstowy klient-serwer z szyfrowaniem wiadomości z wykorzystaniem RSA i AES, przesyłanie plików, system kont i znajomych - Bartosz Bielawski, Mateusz Stokowiec
