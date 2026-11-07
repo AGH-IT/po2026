@@ -103,3 +103,5 @@ System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
 Gra Symulacyjna Dyspozytorni Komunikacji Miejskiej (DisKrak) : Symulator ruchu w czasie rzeczywistym, zarządzanie flotą i kadrą kierowców z tachografem, kreator przystanków i linii tymczasowych, modularny system wypadków, grywalizacja nastrojów dzielnic, asystent z kartami decyzyjnymi oraz analityka słupkowa - Karol Machnik, Hubert Śliwa
 
 Wektorowa baza danych (Chonker) : baza danych do przechowywania danych różnego rodzaju (tekstu, obrazów, dźwięków itd.) w postaci osadzeń (embedding) w celu łatwiejszego i szybszego wyszukiwania treści, modularność modeli do generowania osadzeń, zarządzanie użytkownikami i uprawnieniami - Piotr Trybała, indywidualnie
+
+System Wykrywania i Analizy Zagrożeń Bezpieczeństwa (Mini SIEM): Analiza logów systemowych i sieciowych, wykrywanie podejrzanych aktywności na podstawie konfigurowalnych reguł (np. wielokrotne nieudane logowania), generowanie alertów oraz prezentacja historii zdarzeń i statystyk bezpieczeństwa. Konrad Rzemieniec, Krzysztof Mrowiec
