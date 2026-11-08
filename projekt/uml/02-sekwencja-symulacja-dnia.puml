@@ -1,0 +1,45 @@
+@startuml
+autonumber
+
+actor Operator
+participant "WebServer / Main\n(vpp-app)" as App
+participant "EstateBuilder\n(vpp-engine)" as Builder
+participant "Simulation\n(vpp-engine)" as Sim
+participant "WeatherProvider &\nPriceProvider (vpp-data)" as Providers
+participant "VirtualPowerPlant\n(vpp-engine)" as VPP
+participant "DispatchStrategy\n(vpp-engine)" as Strategy
+participant "Battery\n(vpp-engine)" as Battery
+participant "EnergyBalanceValidator\n(vpp-engine)" as Validator
+participant "SimulationListener\n(vpp-domain)" as Listener
+
+Operator -> App : wybiera dzień, strategię i ustawienia (EstateConfig)
+App -> Builder : build(estateConfig, operatorSettings)
+Builder --> App : VirtualPowerPlant, Simulation
+
+App -> Sim : run(timeline)
+
+loop dla każdego kroku czasu t (np. 96 kroków po 15 min)
+    Sim -> Providers : getConditions(t)
+    Providers --> Sim : Conditions (pogoda + cena)
+
+    Sim -> VPP : step(conditions, dtHours)
+    VPP -> VPP : oblicz produkcję (PV, Wiatrak) i zużycie (Odbiorcy)\n-> wyznacz netKw = prodKw - loadKw
+
+    VPP -> Strategy : decide(netKw, batteryState, conditions)
+    Strategy --> VPP : Dispatch (desiredBatteryKw, desiredGridKw)
+
+    VPP -> Battery : applyPower(desiredBatteryKw, dtHours)
+    Battery --> VPP : actualBatteryKw (przycięte do limitów mocy i SoC)
+
+    VPP -> VPP : skoryguj gridKw = actualBatteryKw - netKw\nzbuduj listę AssetFlow i StepResult
+
+    VPP -> Validator : validate(stepResult, dtHours)
+    Validator --> VPP : OK (błąd < 1e-6 kWh)
+
+    VPP --> Sim : StepResult
+    Sim -> Listener : onStep(stepResult) / onBatteryFull() / onBatteryEmpty()
+end
+
+Sim -> Listener : onFinished(results)
+Sim --> App : List<StepResult>
+@enduml

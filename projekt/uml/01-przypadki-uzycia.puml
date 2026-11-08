@@ -1,38 +1,35 @@
 @startuml
 left to right direction
+skinparam packageStyle rectangle
 
-' TODO: zastąpcie "Użytkownik" właściwą nazwą aktora (np. Klient, Pracownik,
-' Administrator...) i dodajcie kolejnych aktorów, jeśli ich macie więcej.
-actor "Użytkownik" as User
+actor "Operator Osiedla" as Operator
+actor "Open-Meteo API" as OpenMeteo <<System Zewnętrzny>>
 
-package "Nazwa waszej aplikacji" {
-
-    ' TODO: to są tylko przykładowe, generyczne przypadki użycia.
-    ' Zastąpcie je / dopiszcie własne, dopasowane do waszego tematu projektu.
-    usecase "Zaloguj się" as UC_Login
-    usecase "Przeglądaj dane" as UC_Browse
-    usecase "Dodaj nowy element" as UC_Add
-    usecase "Edytuj istniejący element" as UC_Edit
-    usecase "Usuń element" as UC_Delete
-
-    User --> UC_Login
-    User --> UC_Browse
-    User --> UC_Add
-    User --> UC_Edit
-    User --> UC_Delete
-
-    ' Przykład relacji <<include>> — UC_Add zawsze wymaga bycia zalogowanym.
-    UC_Add .> UC_Login : <<include>>
-    UC_Edit .> UC_Login : <<include>>
-    UC_Delete .> UC_Login : <<include>>
+rectangle "Symulator Elektrowni Wirtualnej (VPP)" {
+    usecase "UC1: Wybór dnia symulacji\n(historyczny lub na żywo)" as UC1
+    usecase "UC2: Uruchomienie symulacji doby\ni obliczenie bilansu energii" as UC2
+    usecase "UC3: Wybór strategii sterowania\n(Regułowa / Cenowa)" as UC3
+    usecase "UC4: Ręczne wymuszenie trybu magazynu\n(Ładuj / Trzymaj / Automat)" as UC4
+    usecase "UC5: Symulacja zdarzeń awaryjnych\n(Awaria wiatraka / Wyłączenie PV / Limit eksportu)" as UC5
+    usecase "UC6: Analiza wykresów, kart KPI\ni dziennika zdarzeń" as UC6
+    usecase "UC7: Wizualizacja przepływów energii\nna makiecie 3D osiedla" as UC7
+    usecase "UC8: Porównanie dwóch strategii\ndla tego samego dnia" as UC8
+    usecase "UC9: Eksport wyników symulacji do CSV" as UC9
+    usecase "UC10: Pobranie danych pogodowych\n(z obsługą lokalnego cache)" as UC10
 }
 
-' Wskazówki:
-' - left to right direction układa aktorów po lewej, przypadki po prawej
-'   (czytelniejsze przy więcej niż 1 aktorze).
-' - <<include>> = przypadek ZAWSZE wywołuje inny jako swoją część.
-' - <<extend>> = przypadek OPCJONALNIE rozszerza inny, tylko w pewnych warunkach.
-' - Grupujcie powiązane przypadki użycia w podpakiety (package "Nazwa grupy" { ... }),
-'   jeśli macie ich więcej niż 5-6 — tak jak w materiale z zajęć (system biblioteczny).
+Operator --> UC1
+Operator --> UC2
+Operator --> UC3
+Operator --> UC4
+Operator --> UC5
+Operator --> UC6
+Operator --> UC7
+Operator --> UC8
+Operator --> UC9
 
+UC2 ..> UC10 : <<include>>
+UC2 ..> UC3 : <<include>>
+UC8 ..> UC2 : <<include>>
+UC10 --> OpenMeteo
 @enduml

@@ -1,5 +1,49 @@
-.idea/
+# ==================================
+# 1. Java & Maven (Backend)
+# ==================================
+# Katalogi wynikowe budowania
 target/
-*.iml
+# Skompilowane klasy i archiwa, które mogą powstać lokalnie
 *.class
+*.jar
+*.war
+*.ear
+
+# ==================================
+# 2. Frontend (Node.js, React, Vite)
+# ==================================
+# Zależności NPM (najcięższy katalog, absolutnie nie commitować!)
+node_modules/
+# Skompilowana paczka frontendu (Vite domyślnie wypluwa to do dist/)
+dist/
+dist-ssr/
+# Logi błędów z menedżera pakietów
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==================================
+# 3. Środowisko programisty (IntelliJ IDEA)
+# ==================================
+# Katalog konfiguracji IDE (np. to co masz u siebie w folderze .idea)
+.idea/
+# Pliki ustawień modułów IntelliJ
+*.iml
+*.iws
+*.ipr
+# Domyślny folder na skompilowane klasy z IntelliJ
+out/
+
+# ==================================
+# 4. Inne systemowe i specyficzne dla projektu
+# ==================================
+# Pliki systemowe Windows/macOS
+Thumbs.db
+.DS_Store
+# Logi działającej aplikacji (żeby nie pchać do repozytorium historii uruchomień)
 *.log
+
+# Zabezpieczenie przed przypadkowym commitem wyeksportowanych diagramów.
+# Prowadzący wymaga TYLKO plików *.puml[cite: 1, 19]
+projekt/uml/*.png
+projekt/uml/*.svg
