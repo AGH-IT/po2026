@@ -33,6 +33,13 @@ yarn-error.log*
 *.ipr
 # Domyślny folder na skompilowane klasy z IntelliJ
 out/
+# Pliki Eclipse / rozszerzenia Java w VS Code
+.project
+.classpath
+.settings/
+.vscode/
+# Lokalna baza przypadków testowych jqwik
+.jqwik-database
 
 # ==================================
 # 4. Inne systemowe i specyficzne dla projektu
