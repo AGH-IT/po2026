@@ -1,0 +1,239 @@
+@startuml
+title Diagram klas - kontrakt vpp-domain
+hide empty members
+set separator none
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package "vpp-domain (pl.agh.po.vpp.domain)" {
+
+    package "Konfiguracja osiedla" {
+        class EstateConfig <<record>> {
+            name : String
+            location : Location
+            assets : List<AssetConfig>
+            --
+            assetsOfType(type : AssetType) : List<AssetConfig>
+            findAsset(id : String) : Optional<AssetConfig>
+        }
+        class AssetConfig <<record>> {
+            id : String
+            type : AssetType
+            name : String
+            pvPeakKw : double
+            ratedPowerKw : double
+            capacityKwh : double
+            dwellings : int
+            position : Position
+        }
+        class Location <<record>> {
+            latitude : double
+            longitude : double
+            zone : ZoneId
+        }
+        class Position <<record>> {
+            x : double
+            z : double
+        }
+        enum AssetType {
+            APARTMENT_BLOCK
+            HOUSE
+            SCHOOL
+            WIND_TURBINE
+            BATTERY
+            GRID
+            --
+            isBuilding() : boolean
+        }
+    }
+
+    package "Ustawienia operatora" {
+        class OperatorSettings <<record>> {
+            strategy : StrategyType
+            batteryMode : BatteryMode
+            outages : List<AssetOutage>
+            exportLimitKw : Double
+            seed : long
+            --
+            {static} defaults() : OperatorSettings
+            hasExportLimit() : boolean
+            withStrategy(s : StrategyType) : OperatorSettings
+        }
+        class AssetOutage <<record>> {
+            assetId : String
+            from : LocalTime
+            to : LocalTime
+            --
+            {static} allDay(assetId : String) : AssetOutage
+            isActiveAt(time : LocalTime) : boolean
+        }
+        enum StrategyType {
+            RULE_BASED
+            PRICE_BASED
+        }
+        enum BatteryMode {
+            AUTO
+            CHARGE_NOW
+            HOLD_FOR_EVENING
+        }
+    }
+
+    package "Czas i warunki" {
+        class Timeline <<record>> {
+            date : LocalDate
+            step : Duration
+            zone : ZoneId
+            --
+            {static} of(date : LocalDate, zone : ZoneId) : Timeline
+            start() : Instant
+            end() : Instant
+            steps() : List<Instant>
+            size() : int
+            stepHours() : double
+        }
+        class Weather <<record>> {
+            time : Instant
+            tiltedIrradianceWm2 : double
+            windSpeed80mMs : double
+            temperatureC : double
+            cloudCoverPct : double
+        }
+        class Conditions <<record>> {
+            time : Instant
+            weather : Weather
+            pricePlnPerKwh : double
+        }
+    }
+
+    package "Wyniki" {
+        class SimulationResult <<record>> {
+            timeline : Timeline
+            settings : OperatorSettings
+            steps : List<StepResult>
+        }
+        class StepResult <<record>> {
+            time : Instant
+            step : Duration
+            conditions : Conditions
+            flows : List<AssetFlow>
+            productionKw : double
+            consumptionKw : double
+            batteryKw : double
+            gridKw : double
+            batterySocKwh : double
+            --
+            importKw() : double
+            exportKw() : double
+            energyKwh(powerKw : double) : double
+            balanceErrorKw() : double
+            flowOf(assetId : String) : Optional<AssetFlow>
+        }
+        class AssetFlow <<record>> {
+            assetId : String
+            type : AssetType
+            productionKw : double
+            consumptionKw : double
+            --
+            netKw() : double
+        }
+        class BatteryState <<record>> {
+            socKwh : double
+            capacityKwh : double
+            --
+            socFraction() : double
+            isFull() : boolean
+            isEmpty() : boolean
+        }
+        class Dispatch <<record>> {
+            batteryKw : double
+            gridKw : double
+        }
+    }
+
+    package "Interfejsy" {
+        interface WeatherProvider {
+            weatherFor(t : Timeline, l : Location) : List<Weather>
+        }
+        interface PriceProvider {
+            pricesFor(t : Timeline) : List<Double>
+        }
+        interface SimulationListener {
+            onStep(s : StepResult)
+            onBatteryFull(t : Instant)
+            onBatteryEmpty(t : Instant)
+            onExportLimitReached(t : Instant)
+            onFinished(r : SimulationResult)
+        }
+        interface DispatchStrategy {
+            decide(netKw : double, b : BatteryState, c : Conditions) : Dispatch
+        }
+        interface EnergyAsset {
+            id() : String
+            type() : AssetType
+        }
+        interface PowerSource {
+            powerKw(c : Conditions) : double
+        }
+        interface Load {
+            demandKw(c : Conditions) : double
+        }
+        interface Storage {
+            state() : BatteryState
+            ratedPowerKw() : double
+            apply(requestedKw : double, stepHours : double) : double
+        }
+    }
+
+    package "Wyjątki" {
+        class InvalidEstateException
+        class WeatherUnavailableException
+    }
+}
+
+' --- kompozycja rekordów ---
+EstateConfig *-- "1" Location
+EstateConfig *-- "1..*" AssetConfig
+AssetConfig --> AssetType
+AssetConfig *-- "1" Position
+
+OperatorSettings --> StrategyType
+OperatorSettings --> BatteryMode
+OperatorSettings *-- "0..*" AssetOutage
+
+Conditions *-- "1" Weather
+
+SimulationResult --> Timeline
+SimulationResult --> OperatorSettings
+SimulationResult *-- "0..*" StepResult
+StepResult *-- "1" Conditions
+StepResult *-- "0..*" AssetFlow
+AssetFlow --> AssetType
+
+' --- hierarchia interfejsów (implementacje w vpp-engine) ---
+EnergyAsset <|-- PowerSource
+EnergyAsset <|-- Load
+EnergyAsset <|-- Storage
+EnergyAsset ..> AssetType
+
+' --- najważniejsze zależności interfejsów (pozostałe typy widać w sygnaturach metod) ---
+WeatherProvider ..> Weather : <<create>>
+WeatherProvider ..> WeatherUnavailableException : <<throws>>
+SimulationListener ..> SimulationResult
+DispatchStrategy ..> Dispatch : <<create>>
+Storage ..> BatteryState
+
+RuntimeException <|-- InvalidEstateException
+RuntimeException <|-- WeatherUnavailableException
+
+note right of StepResult
+  Znaki: batteryKw + ładowanie / − rozładowanie,
+  gridKw + import / − eksport.
+  Bilans: productionKw + gridKw = consumptionKw + batteryKw
+end note
+
+note right of AssetFlow
+  Obie moce ≥ 0, z punktu widzenia sieci osiedla.
+  Bateria: production = rozładowanie, consumption = ładowanie.
+  Sieć: production = import, consumption = eksport.
+end note
+@enduml
