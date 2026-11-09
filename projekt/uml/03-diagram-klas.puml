@@ -1,5 +1,5 @@
 @startuml
-title Diagram klas - kontrakt vpp-domain
+title Diagram klas - kontrakt vpp-domain i moduł vpp-data
 hide empty members
 set separator none
 skinparam packageStyle rectangle
@@ -189,6 +189,16 @@ package "vpp-domain (pl.agh.po.vpp.domain)" {
         class WeatherUnavailableException
     }
 }
+
+package "vpp-data (pl.agh.po.vpp.data)" {
+    class EstateLoader {
+        load(file : Path) : EstateConfig
+        parse(json : Reader, source : String) : EstateConfig
+    }
+}
+
+EstateLoader ..> EstateConfig : <<create>>
+EstateLoader ..> InvalidEstateException : <<throws>>
 
 ' --- kompozycja rekordów ---
 EstateConfig *-- "1" Location

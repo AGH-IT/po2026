@@ -1,0 +1,29 @@
+{
+  "name": "Osiedle Słoneczne",
+  "location": {
+    "latitude": 50.0717,
+    "longitude": 20.0377,
+    "zone": "Europe/Warsaw"
+  },
+  "assets": [
+    { "id": "block-1", "type": "APARTMENT_BLOCK", "name": "Blok 1", "pvPeakKw": 30, "dwellings": 40, "position": { "x": -60, "z": -40 } },
+    { "id": "block-2", "type": "APARTMENT_BLOCK", "name": "Blok 2", "pvPeakKw": 30, "dwellings": 40, "position": { "x": -20, "z": -40 } },
+    { "id": "block-3", "type": "APARTMENT_BLOCK", "name": "Blok 3", "pvPeakKw": 30, "dwellings": 40, "position": { "x": 20, "z": -40 } },
+    { "id": "block-4", "type": "APARTMENT_BLOCK", "name": "Blok 4", "pvPeakKw": 30, "dwellings": 40, "position": { "x": 60, "z": -40 } },
+
+    { "id": "house-1", "type": "HOUSE", "name": "Dom 1", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -70, "z": 20 } },
+    { "id": "house-2", "type": "HOUSE", "name": "Dom 2", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -50, "z": 20 } },
+    { "id": "house-3", "type": "HOUSE", "name": "Dom 3", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -30, "z": 20 } },
+    { "id": "house-4", "type": "HOUSE", "name": "Dom 4", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -10, "z": 20 } },
+    { "id": "house-5", "type": "HOUSE", "name": "Dom 5", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -70, "z": 45 } },
+    { "id": "house-6", "type": "HOUSE", "name": "Dom 6", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -50, "z": 45 } },
+    { "id": "house-7", "type": "HOUSE", "name": "Dom 7", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -30, "z": 45 } },
+    { "id": "house-8", "type": "HOUSE", "name": "Dom 8", "pvPeakKw": 5, "dwellings": 1, "position": { "x": -10, "z": 45 } },
+
+    { "id": "school", "type": "SCHOOL", "name": "Szkoła", "pvPeakKw": 20, "position": { "x": 40, "z": 30 } },
+
+    { "id": "wind-1", "type": "WIND_TURBINE", "name": "Wiatrak", "ratedPowerKw": 50, "position": { "x": 90, "z": 60 } },
+    { "id": "battery", "type": "BATTERY", "name": "Magazyn energii", "ratedPowerKw": 100, "capacityKwh": 200, "position": { "x": 0, "z": 0 } },
+    { "id": "grid", "type": "GRID", "name": "Przyłącze do sieci", "ratedPowerKw": 250, "position": { "x": 90, "z": -70 } }
+  ]
+}
