@@ -19,5 +19,16 @@
             <groupId>pl.agh.po.vpp</groupId>
             <artifactId>vpp-domain</artifactId>
         </dependency>
+
+        <!-- JSON: estate.json, później cache pogody -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- Typy java.time w JSON (ZoneId, Instant) -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
     </dependencies>
 </project>
