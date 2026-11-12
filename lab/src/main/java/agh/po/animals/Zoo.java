@@ -3,10 +3,11 @@ package agh.po.animals;
 import java.util.*;
 
 public class Zoo {
-    ArrayList<Animal> animals = new ArrayList<>(100);
+    int rozmiar = 100;
+    ArrayList<Animal> animals = new ArrayList<>(rozmiar);
     public void losowanie(){
         Random random = new Random();
-        for(int i = 0; i < animals.size(); i++){
+        for(int i = 0; i < rozmiar; i++){
             int wylosowane = random.nextInt(3);
             switch (wylosowane){
                 case 0:
