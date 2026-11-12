@@ -106,3 +106,5 @@ Wektorowa baza danych (Chonker) : baza danych do przechowywania danych różnego
 
 System Wykrywania i Analizy Zagrożeń Bezpieczeństwa (Mini SIEM): Analiza logów systemowych i sieciowych, wykrywanie podejrzanych aktywności na podstawie konfigurowalnych reguł (np. wielokrotne nieudane logowania), generowanie alertów oraz prezentacja historii zdarzeń i statystyk bezpieczeństwa. Konrad Rzemieniec, Krzysztof Mrowiec
 Komunikator tekstowy klient-serwer z szyfrowaniem wiadomości z wykorzystaniem RSA i AES, przesyłanie plików, system kont i znajomych - Bartosz Bielawski, Mateusz Stokowiec
+
+50) Rekreacja gry Bomberman (NES 1985) - Kamil Deptalski, indywidualnie
