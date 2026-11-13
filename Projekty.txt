@@ -59,7 +59,7 @@ Kategoria C: Gry i rozrywka (najciekawsze na diagramy sekwencji)
 24) System Rozgrywek Turniejowych z Rankingiem ELO: Rejestracja meczów, aktualizacja rankingu graczy po każdym wyniku i generowanie drabinki na kolejną rundę.
 
 25) Gra Strategiczna 4X (uproszczona, tekstowa): Eksploracja mapy heksagonalnej, rozbudowa osad, drzewko technologii i podstawowe starcia jednostek.
-
+Kamil Pałka, Aleksander Nowakowski
 26) Silnik Przygodówki Tekstowej (Interactive Fiction Engine): Parser komend, stan świata, ekwipunek gracza i wczytywanie scenariuszy z plików konfiguracyjnych.
 
 27) Symulator Zarządzania Drużyną Sportową (Manager): Skład zawodników o statystykach, budżet transferowy, plan meczów i symulacja wyników na podstawie atrybutów.
