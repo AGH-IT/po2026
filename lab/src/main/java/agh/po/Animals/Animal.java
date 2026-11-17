@@ -9,7 +9,11 @@ public abstract class Animal {
         this.legs = legs;
     }
 
-    public abstract class String getDescription();
+    public abstract String getDescription();
+
+    public void makeSound() {
+        System.out.println("Zwierzę wydaje dzwięk");
+    }
 
     public String getName() {
         return name;

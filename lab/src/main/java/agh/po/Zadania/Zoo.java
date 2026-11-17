@@ -35,7 +35,7 @@ public class Zoo {
             } else {
                 randomAnimal = new Snake(name);
             }
-            animals[i] = randomAnimal
+            animals[i] = randomAnimal;
         }
         count = animals.length;
     }
@@ -49,8 +49,22 @@ public class Zoo {
     }
     public void showAnimal() {
         for (int i = 0; i < count; i++) {
-            System.out.println((animals[i].getDescription());
+            Animal animal = animals[i];
+            int legs = animal.getLegs();
+            System.out.println(animals[i].getDescription());
         }
+    }
+    public void makeAllSounds() {
+        for(int i = 0; i < count; i++) {
+            animals[i].makeSound();;
+        }
+    }
+    public static void main(String[] args) {
+        Zoo zoo = new Zoo();
+        zoo.fillZoo();
+        zoo.showAnimal();
+        System.out.println("Suma nóg: " + zoo.allLegs());
+        zoo.makeAllSounds();
     }
 
 }
