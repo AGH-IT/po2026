@@ -108,3 +108,6 @@ System Wykrywania i Analizy Zagrożeń Bezpieczeństwa (Mini SIEM): Analiza log�
 Komunikator tekstowy klient-serwer z szyfrowaniem wiadomości z wykorzystaniem RSA i AES, przesyłanie plików, system kont i znajomych - Bartosz Bielawski, Mateusz Stokowiec
 
 50) Rekreacja gry Bomberman (NES 1985) - Kamil Deptalski, indywidualnie
+
+51) Anonimowy czat wykładowy - anonimowe zadawanie pytań wykładowcy, ankieta poziomu zrozumienia
+Kamil Gawęda, Jakub Czupryna
