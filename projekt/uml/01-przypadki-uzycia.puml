@@ -39,6 +39,8 @@ rectangle "Symulator Systemu Plików" {
   package "Serializacja" {
     usecase "Zapisz strukturę\ndo pliku" as UC_Zapisz
     usecase "Wczytaj strukturę\nz pliku" as UC_Wczytaj
+    usecase "Zapisz katalog domowy\ndo pliku" as UC_ZapiszDom
+    usecase "Wczytaj katalog domowy\nz pliku" as UC_WczytajDom
   }
 }
 
@@ -52,13 +54,15 @@ U --> UC_Lista
 U --> UC_CD
 U --> UC_Tresc
 U --> UC_Chmod
-U --> UC_Zapisz
-U --> UC_Wczytaj
+U --> UC_ZapiszDom
+U --> UC_WczytajDom
 U --> UC_Login
 U --> UC_Logout
 A --> UC_Chown
 A --> UC_NowyUzytkownik
 A --> UC_Haslo
+A --> UC_Zapisz
+A --> UC_Wczytaj
 
 ' --- include: zawsze wymagane ---
 UC_NowyPlik ..> UC_Sprawdz : <<include>>
@@ -73,6 +77,10 @@ UC_Chmod ..> UC_Sprawdz : <<include>>
 UC_Chown ..> UC_Sprawdz : <<include>>
 UC_NowyUzytkownik ..> UC_Sprawdz : <<include>>
 UC_Haslo ..> UC_Sprawdz : <<include>>
+UC_Zapisz ..> UC_Sprawdz : <<include>>
+UC_Wczytaj ..> UC_Sprawdz : <<include>>
+UC_ZapiszDom ..> UC_Sprawdz : <<include>>
+UC_WczytajDom ..> UC_Sprawdz : <<include>>
 
 ' --- extend: tylko w pewnych warunkach ---
 UC_Odrzuc ..> UC_Login : <<extend>>
@@ -91,11 +99,15 @@ end note
 note as N_warunki
   Warunek wstępny wszystkich przypadków użycia
   poza „Zaloguj się”: użytkownik jest zalogowany.
-  Operacje na kontach (utwórz konto, zmień hasło)
-  oraz zmiana właściciela są dostępne tylko dla
-  Administratora (sprawdza je „Sprawdź prawa dostępu”).
-  Pierwsze konto administratora powstaje przy
+  Operacje na kontach (utwórz konto, zmień hasło),
+  zmiana właściciela oraz zapis i wczytanie całej
+  struktury są dostępne tylko dla Administratora
+  (sprawdza je „Sprawdź prawa dostępu”).
+  Pierwsze konto administratora („root”) powstaje przy
   inicjalizacji systemu, gdy nie ma jeszcze żadnych kont.
+  Każde nowe konto dostaje katalog domowy /home/<login>.
+  Zwykły użytkownik zapisuje i wczytuje tylko swój
+  katalog domowy. Plik wybiera w oknie dialogowym.
 end note
 U .. N_warunki
 

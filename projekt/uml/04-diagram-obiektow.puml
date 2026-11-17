@@ -5,8 +5,8 @@ object "sp : SystemPlikow" as sp
 
 object "rejestr : RejestrUzytkownikow" as rejestr
 
-object "admin : Uzytkownik" as admin {
-  login = "admin"
+object "root : Uzytkownik" as admin {
+  login = "root"
   hashHasla = "$2a$10$N9qo8uLOickgx2ZMRZoMye..."
   rola = ADMINISTRATOR
 }
@@ -76,7 +76,7 @@ notatki *-- prawaNotatki
 
 note bottom of admin
   Trzy węzły (korzen, home, readme) wskazują na
-  ten sam obiekt admin. Dlatego w JSON-ie
+  ten sam obiekt root. Dlatego w JSON-ie
   zapisujemy tylko login właściciela (WezelDane),
   a przy wczytaniu odtwarzamy referencję z rejestru.
 end note

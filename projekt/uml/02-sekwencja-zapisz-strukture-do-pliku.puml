@@ -1,57 +1,71 @@
 @startuml
-title Sekwencja: Zapisz strukturę do pliku (serializacja drzewa do JSON)
+title Sekwencja: Zapisz strukturę do pliku (tylko Administrator, serializacja całego drzewa do JSON)
 
-actor "Użytkownik" as U
+actor "Administrator" as A
 participant "Interfejs\n(obsługa)" as UI
 participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
 participant ":SystemPlikowZapis" as ZP
 participant "WezelDane" as WD
 participant "wezel :WezelSystemuPlikow" as W
 participant "Gson\n(biblioteka)" as G
 participant "Files\n(java.nio)" as F
 
-U -> UI : zapisz strukturę
+A -> UI : zapisz strukturę, wybór pliku w oknie dialogowym
 activate UI
-UI -> SP : zapiszDoPliku()
+UI -> SP : zapiszDoPliku(plik)
 activate SP
 SP -> SP : wymagajZalogowanego()
-SP -> ZP : zapisz(korzen)
-activate ZP
+SP -> KD : wymagajAdministratora(zalogowany)
+activate KD
+note right of KD : «include» Sprawdź prawa dostępu\n(wariant: tylko administrator)
 
-ZP -> WD : zWezla(korzen)
-activate WD
-loop dla każdego węzła w drzewie (rekurencja po dzieciach)
-  WD -> W : getNazwa(), getWlasciciel(), getPrawa(), getDzieci() / odczytaj()
-  activate W
-  W --> WD : dane węzła
-  deactivate W
-  note right of WD
-    Właściciel zapisywany jako login (String),
-    nie jako cały obiekt — bez duplikacji
-    użytkowników w pliku.
-  end note
-end
-WD --> ZP : korzenDane
-deactivate WD
+alt zalogowany nie jest administratorem
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> A : "Całą strukturę może zapisać tylko administrator"
+else administrator
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> ZP : zapisz(korzen, plik)
+  activate ZP
 
-ZP -> G : toJson(korzenDane)
-activate G
-G --> ZP : json
-deactivate G
-ZP -> F : writeString(plik, json)
-activate F
-alt błąd zapisu (IOException)
-  F --> ZP : IOException
-  ZP --> SP : BladOperacjiException("nie udało się zapisać")
-  SP --> UI : BladOperacjiException
-  UI --> U : "Nie udało się zapisać struktury"
-else zapis się udał
-  F --> ZP : (ok)
-  deactivate F
-  ZP --> SP : (ok)
-  deactivate ZP
-  SP --> UI : (ok)
-  UI --> U : "Zapisano strukturę"
+  ZP -> WD : zWezla(korzen)
+  activate WD
+  loop dla każdego węzła w drzewie (rekurencja po dzieciach)
+    WD -> W : getNazwa(), getWlasciciel(), getPrawa(), getDzieci() / odczytaj()
+    activate W
+    W --> WD : dane węzła
+    deactivate W
+    note right of WD
+      Właściciel zapisywany jako login (String),
+      nie jako cały obiekt — bez duplikacji
+      użytkowników w pliku.
+    end note
+  end
+  WD --> ZP : korzenDane
+  deactivate WD
+
+  ZP -> G : toJson(korzenDane)
+  activate G
+  G --> ZP : json
+  deactivate G
+  ZP -> F : writeString(plik, json)
+  activate F
+  alt błąd zapisu (IOException)
+    F --> ZP : IOException
+    ZP --> SP : BladOperacjiException("nie udało się zapisać", przyczyna)
+    SP --> UI : BladOperacjiException
+    UI --> A : "Nie udało się zapisać struktury"
+  else zapis się udał
+    F --> ZP : (ok)
+    deactivate F
+    ZP --> SP : (ok)
+    deactivate ZP
+    SP --> UI : (ok)
+    UI --> A : "Zapisano strukturę"
+  end
 end
 deactivate SP
 deactivate UI

@@ -1,3 +1,7 @@
 .idea/
 target/
 *.iml
+
+# Projekt: wyrenderowane diagramy (w repo trzymamy tylko .puml) i dane zapisywane przez aplikację (hashe haseł)
+projekt/uml/render/
+projekt/dane/

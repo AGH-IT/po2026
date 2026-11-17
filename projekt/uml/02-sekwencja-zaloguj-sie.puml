@@ -33,7 +33,14 @@ else login istnieje
     SP --> UI : BladLogowaniaException\n("niepoprawny login lub hasło")
     UI --> U : "Logowanie odrzucone"
   else hasło poprawne
-    SP -> SP : zalogowany = uzytkownik\nbiezacyKatalog = korzen
+    SP -> SP : zalogowany = uzytkownik
+    SP -> SP : znajdzKatalogDomowy(uzytkownik)
+    SP -> SP : biezacyKatalog = /home/<login>
+    note right of SP
+      Użytkownik zaczyna w swoim katalogu domowym (D32).
+      Gdy katalogu domowego nie ma (administrator go usunął),
+      biezacyKatalog = korzen.
+    end note
     SP --> UI : uzytkownik
     UI --> U : "Zalogowano jako login (rola)"
   end

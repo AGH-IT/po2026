@@ -43,6 +43,12 @@ else administrator
     activate RU
     RU --> SP
     deactivate RU
+    SP -> SP : utworzKatalogDomowy(uzytkownik)
+    note right of SP
+      Tworzy /home/<login> z właścicielem = nowy użytkownik
+      i domyślnymi prawami (właściciel: wszystko, pozostali: ODCZYT, WYKONANIE).
+      Bez sprawdzania praw do /home: administrator już przeszedł wymagajAdministratora.
+    end note
     SP -> ZK : zapisz(rejestr)
     activate ZK
     ZK --> SP
