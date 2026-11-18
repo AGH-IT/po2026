@@ -11,7 +11,7 @@ kolumny, których zależności są już odhaczone. Po skończeniu zadania odhacz
 
 ## Etap 0 — razem, blokuje wszystko
 
-- [x] Rozstrzygnąć luki w diagramie klas, nanieść je na diagramy, `KLASY.md`, `TRACEABILITY.md`, `DECYZJE.md`
+- [x] Rozstrzygnąć luki w diagramie klas, nanieść je na diagramy i do `DECYZJE.md`
       (konstruktory, konto root, katalogi domowe, zapis kont, GUI: D18–D30).
 - [x] Rozstrzygnąć 3 nowe pytania otwarte z `DECYZJE.md` (wyjątki sprawdzane czy nie, katalog po zalogowaniu,
       brakujący katalog domowy po wczytaniu całości).
@@ -23,7 +23,7 @@ kolumny, których zależności są już odhaczone. Po skończeniu zadania odhacz
 
 | ID | Programista A — drzewo i uprawnienia | Zależy od |
 |---|---|---|
-| A1 | [ ] `Uprawnienie`, `PrawaDostepu` + testy `czyPozwala` | etap 0 |
+| A1 | [x] `Uprawnienie`, `PrawaDostepu` + testy `czyPozwala` | etap 0 |
 | A2 | [ ] `WezelSystemuPlikow`, `Plik`, `Katalog` + testy (`dodajDziecko` ustawia rodzica, `getSciezka`, `czyLezyWPoddrzewie`, `policzPotomkow`, `getRozmiar`) | A1, B1 (`Uzytkownik` jako właściciel) |
 
 | ID | Programista B — konta i wyjątki | Zależy od |
@@ -35,7 +35,7 @@ kolumny, których zależności są już odhaczone. Po skończeniu zadania odhacz
 
 | ID | Programista A | Zależy od |
 |---|---|---|
-| A3 | [ ] `KontrolaDostepu` + testy reguł D7, D8, D8a (administrator, właściciel, pozostali, `wymagajAdministratora`). Priorytet testów z `AGENTS.md`. | A2, B1 |
+| A3 | [ ] `KontrolaDostepu` + testy reguł D7, D8, D8a (administrator, właściciel, pozostali, `wymagajAdministratora`). Priorytet testów z `CLAUDE.md`. | A2, B1 |
 | A4 | [ ] `SystemPlikow`, operacje na drzewie: `znajdzWezel`, `utworzPlik`, `utworzKatalog`, `usun`, `usunKatalogRekurencyjnie`, `przenies`, `zmienNazwe`, `przejdzDo`, `listuj`, `odczytajPlik`, `zapiszPlik`, `zmienPrawa`, `zmienWlasciciela` + ochrona korzenia (D27) + testy wg sekwencji `02-*` | A3, B2 |
 
 | ID | Programista B | Zależy od |
@@ -71,7 +71,7 @@ kolumny, których zależności są już odhaczone. Po skończeniu zadania odhacz
 - **`SystemPlikow` jest wspólny.** Szkielet (B2) wchodzi do `main` jak najwcześniej. Potem A zmienia tylko ciała
   metod z A4, a B tylko z B3 i B6. Nie przestawiajcie kolejności metod i nie formatujcie całego pliku.
 - **Diagram klas jest wspólny.** Zmiana sygnatury lub nowa klasa wymaga zgody drugiej osoby. Zmiana diagramu idzie
-  osobnym commitem przed kodem (zob. `AGENTS.md`, reguła 2).
+  osobnym commitem przed kodem (zob. `CLAUDE.md`, reguła 1).
 - **Testy:** każdy pisze testy do swoich klas w `src/test/java/systemplikow/<pakiet>/`. Testy drugiej osoby
   nie mogą się sypać po waszym merge'u.
 - **Pytania otwarte** z `DECYZJE.md` rozstrzygacie razem i dopisujecie decyzję z nowym numerem `D…`.
