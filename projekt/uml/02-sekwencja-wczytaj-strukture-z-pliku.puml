@@ -1,0 +1,94 @@
+@startuml
+title Sekwencja: Wczytaj strukturę z pliku (tylko Administrator, odtworzenie drzewa i właścicieli)
+
+actor "Administrator" as A
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant ":SystemPlikowZapis" as ZP
+participant "Files\n(java.nio)" as F
+participant "Gson\n(biblioteka)" as G
+participant "WezelDane" as WD
+participant ":RejestrUzytkownikow" as RU
+
+A -> UI : wczytaj strukturę, wybór pliku w oknie dialogowym
+activate UI
+UI -> SP : wczytajZPliku(plik)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> KD : wymagajAdministratora(zalogowany)
+activate KD
+note right of KD : «include» Sprawdź prawa dostępu\n(wariant: tylko administrator)
+
+alt zalogowany nie jest administratorem
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> A : "Całą strukturę może wczytać tylko administrator"
+else administrator
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> ZP : wczytaj(rejestr, plik)
+  activate ZP
+
+  ZP -> F : readString(plik)
+  activate F
+  alt błąd odczytu (brak pliku, IOException)
+    F --> ZP : IOException
+    ZP --> SP : BladOperacjiException("nie udało się wczytać", przyczyna)
+    SP --> UI : BladOperacjiException
+    UI --> A : "Nie udało się wczytać struktury"
+  else plik odczytany
+    F --> ZP : json
+    deactivate F
+    ZP -> G : fromJson(json, WezelDane.class)
+    activate G
+    G --> ZP : korzenDane
+    deactivate G
+
+    ZP -> WD : doWezla(rejestr)
+    activate WD
+    loop dla każdego WezelDane w drzewie (rekurencja po dzieciach)
+      WD -> RU : znajdz(wlascicielLogin)
+      activate RU
+      RU --> WD : uzytkownik / null
+      deactivate RU
+      alt właściciel nie istnieje w rejestrze kont
+        WD --> ZP : BladOperacjiException("nieznany właściciel")
+        ZP --> SP : BladOperacjiException
+        SP --> UI : BladOperacjiException
+        UI --> A : "Wczytanie przerwane: plik wskazuje nieistniejącego użytkownika"
+      else właściciel znaleziony
+        note right of WD
+          Tworzy Plik lub Katalog, odtwarza prawa
+          (nadaj / odbierz) i wlasciciela (referencja
+          do obiektu z rejestru), dodaje dzieci do katalogu.
+        end note
+      end
+    end
+    WD --> ZP : nowyKorzen
+    deactivate WD
+    ZP --> SP : nowyKorzen
+    deactivate ZP
+
+    SP -> SP : uzupelnijKatalogiDomowe(nowyKorzen)
+    note right of SP
+      Jeśli w pliku brakuje /home albo /home/<login> dla któregoś
+      konta z rejestru, katalog jest dotwarzany (właściciel: root
+      dla /home, dane konto dla /home/<login>, prawa domyślne, D33).
+      Węzeł /home/<login>, który nie jest katalogiem, przerywa
+      wczytanie: BladOperacjiException.
+    end note
+    SP -> SP : korzen = nowyKorzen\nbiezacyKatalog = korzen
+    note right of SP
+      Nowe drzewo budowane i uzupełniane jest w całości, zanim
+      zastąpi stare — przy błędzie obecna struktura zostaje nietknięta.
+    end note
+    SP --> UI : (ok)
+    UI --> A : "Wczytano strukturę"
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

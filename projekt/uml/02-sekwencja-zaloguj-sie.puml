@@ -1,0 +1,56 @@
+@startuml
+title Sekwencja: Zaloguj się (z gałęzią „Odrzuć logowanie”)
+
+actor "Użytkownik" as U
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":RejestrUzytkownikow" as RU
+participant "uzytkownik :Uzytkownik" as UZ
+participant "BCrypt\n(biblioteka jBCrypt)" as BC
+
+U -> UI : podaj login i hasło
+activate UI
+UI -> SP : zaloguj(login, haslo)
+activate SP
+SP -> RU : znajdz(login)
+activate RU
+RU --> SP : uzytkownik / null
+deactivate RU
+
+alt nie ma takiego loginu
+  SP --> UI : BladLogowaniaException\n("niepoprawny login lub hasło")
+  UI --> U : "Logowanie odrzucone"
+else login istnieje
+  SP -> UZ : sprawdzHaslo(haslo)
+  activate UZ
+  UZ -> BC : checkpw(haslo, hashHasla)
+  activate BC
+  BC --> UZ : true / false
+  deactivate BC
+  UZ --> SP : true / false
+  deactivate UZ
+  alt hasło niepoprawne
+    SP --> UI : BladLogowaniaException\n("niepoprawny login lub hasło")
+    UI --> U : "Logowanie odrzucone"
+  else hasło poprawne
+    SP -> SP : zalogowany = uzytkownik
+    SP -> SP : znajdzKatalogDomowy(uzytkownik)
+    SP -> SP : biezacyKatalog = /home/<login>
+    note right of SP
+      Użytkownik zaczyna w swoim katalogu domowym (D32).
+      Gdy katalogu domowego nie ma (administrator go usunął),
+      biezacyKatalog = korzen.
+    end note
+    SP --> UI : uzytkownik
+    UI --> U : "Zalogowano jako login (rola)"
+  end
+end
+deactivate SP
+deactivate UI
+
+note right of SP
+  Ten sam komunikat błędu dla „zły login” i „złe hasło” —
+  system nie ujawnia, które z nich było błędne.
+end note
+
+@enduml

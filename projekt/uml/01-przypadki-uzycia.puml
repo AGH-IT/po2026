@@ -1,38 +1,114 @@
 @startuml
+title Symulator Systemu Plików — diagram przypadków użycia
 left to right direction
+skinparam packageStyle rectangle
 
-' TODO: zastąpcie "Użytkownik" właściwą nazwą aktora (np. Klient, Pracownik,
-' Administrator...) i dodajcie kolejnych aktorów, jeśli ich macie więcej.
-actor "Użytkownik" as User
+actor "Użytkownik" as U
+actor "Administrator" as A
+A --|> U
 
-package "Nazwa waszej aplikacji" {
+rectangle "Symulator Systemu Plików" {
 
-    ' TODO: to są tylko przykładowe, generyczne przypadki użycia.
-    ' Zastąpcie je / dopiszcie własne, dopasowane do waszego tematu projektu.
+  package "Struktura drzewa" {
+    usecase "Utwórz plik" as UC_NowyPlik
+    usecase "Utwórz katalog" as UC_NowyKatalog
+    usecase "Usuń element" as UC_Usun
+    usecase "Usuń katalog\nwraz z zawartością" as UC_UsunRek
+    usecase "Przenieś element" as UC_Przenies
+    usecase "Zmień nazwę elementu" as UC_Nazwa
+    usecase "Wyświetl zawartość\nkatalogu" as UC_Lista
+    usecase "Przejdź do katalogu" as UC_CD
+    usecase "Odczytaj / zapisz\nzawartość pliku" as UC_Tresc
+  }
+
+  package "Prawa dostępu" {
+    usecase "Sprawdź prawa dostępu" as UC_Sprawdz
+    usecase "Zgłoś brak uprawnień" as UC_Odmowa
+    usecase "Zmień prawa dostępu" as UC_Chmod
+    usecase "Zmień właściciela" as UC_Chown
+  }
+
+  package "Konta i uwierzytelnianie" {
     usecase "Zaloguj się" as UC_Login
-    usecase "Przeglądaj dane" as UC_Browse
-    usecase "Dodaj nowy element" as UC_Add
-    usecase "Edytuj istniejący element" as UC_Edit
-    usecase "Usuń element" as UC_Delete
+    usecase "Wyloguj się" as UC_Logout
+    usecase "Odrzuć logowanie" as UC_Odrzuc
+    usecase "Utwórz konto\nużytkownika" as UC_NowyUzytkownik
+    usecase "Zmień hasło\nużytkownika" as UC_Haslo
+  }
 
-    User --> UC_Login
-    User --> UC_Browse
-    User --> UC_Add
-    User --> UC_Edit
-    User --> UC_Delete
-
-    ' Przykład relacji <<include>> — UC_Add zawsze wymaga bycia zalogowanym.
-    UC_Add .> UC_Login : <<include>>
-    UC_Edit .> UC_Login : <<include>>
-    UC_Delete .> UC_Login : <<include>>
+  package "Serializacja" {
+    usecase "Zapisz strukturę\ndo pliku" as UC_Zapisz
+    usecase "Wczytaj strukturę\nz pliku" as UC_Wczytaj
+    usecase "Zapisz katalog domowy\ndo pliku" as UC_ZapiszDom
+    usecase "Wczytaj katalog domowy\nz pliku" as UC_WczytajDom
+  }
 }
 
-' Wskazówki:
-' - left to right direction układa aktorów po lewej, przypadki po prawej
-'   (czytelniejsze przy więcej niż 1 aktorze).
-' - <<include>> = przypadek ZAWSZE wywołuje inny jako swoją część.
-' - <<extend>> = przypadek OPCJONALNIE rozszerza inny, tylko w pewnych warunkach.
-' - Grupujcie powiązane przypadki użycia w podpakiety (package "Nazwa grupy" { ... }),
-'   jeśli macie ich więcej niż 5-6 — tak jak w materiale z zajęć (system biblioteczny).
+' --- aktorzy ---
+U --> UC_NowyPlik
+U --> UC_NowyKatalog
+U --> UC_Usun
+U --> UC_Przenies
+U --> UC_Nazwa
+U --> UC_Lista
+U --> UC_CD
+U --> UC_Tresc
+U --> UC_Chmod
+U --> UC_ZapiszDom
+U --> UC_WczytajDom
+U --> UC_Login
+U --> UC_Logout
+A --> UC_Chown
+A --> UC_NowyUzytkownik
+A --> UC_Haslo
+A --> UC_Zapisz
+A --> UC_Wczytaj
+
+' --- include: zawsze wymagane ---
+UC_NowyPlik ..> UC_Sprawdz : <<include>>
+UC_NowyKatalog ..> UC_Sprawdz : <<include>>
+UC_Usun ..> UC_Sprawdz : <<include>>
+UC_Przenies ..> UC_Sprawdz : <<include>>
+UC_Nazwa ..> UC_Sprawdz : <<include>>
+UC_Lista ..> UC_Sprawdz : <<include>>
+UC_CD ..> UC_Sprawdz : <<include>>
+UC_Tresc ..> UC_Sprawdz : <<include>>
+UC_Chmod ..> UC_Sprawdz : <<include>>
+UC_Chown ..> UC_Sprawdz : <<include>>
+UC_NowyUzytkownik ..> UC_Sprawdz : <<include>>
+UC_Haslo ..> UC_Sprawdz : <<include>>
+UC_Zapisz ..> UC_Sprawdz : <<include>>
+UC_Wczytaj ..> UC_Sprawdz : <<include>>
+UC_ZapiszDom ..> UC_Sprawdz : <<include>>
+UC_WczytajDom ..> UC_Sprawdz : <<include>>
+
+' --- extend: tylko w pewnych warunkach ---
+UC_Odrzuc ..> UC_Login : <<extend>>
+note on link
+  warunek: niepoprawny login lub hasło
+end note
+UC_UsunRek ..> UC_Usun : <<extend>>
+note on link
+  warunek: usuwany element to niepusty katalog
+end note
+UC_Odmowa ..> UC_Sprawdz : <<extend>>
+note on link
+  warunek: brak wymaganego uprawnienia
+end note
+
+note as N_warunki
+  Warunek wstępny wszystkich przypadków użycia
+  poza „Zaloguj się”: użytkownik jest zalogowany.
+  Operacje na kontach (utwórz konto, zmień hasło),
+  zmiana właściciela oraz zapis i wczytanie całej
+  struktury są dostępne tylko dla Administratora
+  (sprawdza je „Sprawdź prawa dostępu”).
+  Pierwsze konto administratora („root”) powstaje przy
+  inicjalizacji systemu, gdy nie ma jeszcze żadnych kont.
+  Każde nowe konto dostaje katalog domowy /home/<login>.
+  Zwykły użytkownik zapisuje i wczytuje tylko swój
+  katalog domowy. Plik wybiera w oknie dialogowym.
+end note
+U .. N_warunki
 
 @enduml

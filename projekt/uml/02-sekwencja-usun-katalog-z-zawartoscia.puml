@@ -1,0 +1,70 @@
+@startuml
+title Sekwencja: Usuń katalog wraz z zawartością (rozszerza „Usuń element”)
+
+actor "Użytkownik" as U
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant "katalog :Katalog" as K
+participant "rodzic :Katalog" as R
+
+U -> UI : usuń element (ścieżka)
+activate UI
+UI -> SP : usun(sciezka)
+activate SP
+note right of SP
+  Zwykłe usun() odrzuca niepusty katalog:
+  BladOperacjiException("katalog nie jest pusty").
+  Wtedy interfejs pyta o potwierdzenie i wywołuje
+  rozszerzenie (extend): usunKatalogRekurencyjnie().
+end note
+SP --> UI : BladOperacjiException("katalog nie jest pusty")
+deactivate SP
+UI --> U : "Katalog nie jest pusty. Usunąć wraz z zawartością?"
+U -> UI : tak
+
+UI -> SP : usunKatalogRekurencyjnie(sciezka)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> SP : znajdzWezel(sciezka)
+
+alt element nie jest katalogiem lub jest katalogiem głównym
+  SP --> UI : BladOperacjiException
+  UI --> U : błąd
+else zwykły katalog
+  SP -> K : getRodzic()
+  activate K
+  K --> SP : rodzic
+  deactivate K
+  SP -> KD : wymagaj(zalogowany, rodzic, ZAPIS)
+  activate KD
+  note right of KD
+    «include» Sprawdź prawa dostępu.
+    Uproszczenie: prawa sprawdzane tylko dla katalogu
+    nadrzędnego, nie dla każdego elementu w poddrzewie.
+  end note
+  alt brak uprawnień
+    KD --> SP : BrakUprawnienException
+    SP --> UI : BrakUprawnienException
+    UI --> U : "Brak uprawnień"
+  else uprawnienia są
+    KD --> SP : (dostęp przyznany)
+    deactivate KD
+    SP -> K : policzPotomkow()
+    activate K
+    K --> SP : liczba
+    deactivate K
+    SP -> R : usunDziecko(katalog)
+    activate R
+    R -> K : setRodzic(null)
+    R --> SP
+    deactivate R
+    note right of R : poddrzewo przestaje być osiągalne i zostaje\nusunięte razem z katalogiem (kompozycja)
+    SP --> UI : liczba
+    UI --> U : "Usunięto katalog i liczba elementów"
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

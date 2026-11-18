@@ -1,0 +1,51 @@
+@startuml
+title Sekwencja: Sprawdź prawa dostępu («include») i Zgłoś brak uprawnień («extend»)
+
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant "uzytkownik :Uzytkownik" as UZ
+participant "wezel :WezelSystemuPlikow" as W
+participant ":PrawaDostepu" as PD
+
+note over SP, KD
+  Ta sekwencja jest wywoływana (include) z każdej operacji
+  na drzewie: utworzPlik, usun, przenies, zmienPrawa itd.
+end note
+
+SP -> KD : wymagaj(uzytkownik, wezel, uprawnienie)
+activate KD
+KD -> KD : czyMaDostep(uzytkownik, wezel, uprawnienie)
+activate KD
+KD -> UZ : czyAdministrator()
+activate UZ
+UZ --> KD : true / false
+deactivate UZ
+
+alt administrator
+  note right of KD : administrator ma dostęp do wszystkiego
+else zwykły użytkownik
+  KD -> W : getWlasciciel()
+  activate W
+  W --> KD : wlasciciel
+  deactivate W
+  note right of KD : jestWlascicielem = (wlasciciel == uzytkownik)
+  KD -> W : getPrawa()
+  activate W
+  W --> KD : prawa
+  deactivate W
+  KD -> PD : czyPozwala(uprawnienie, jestWlascicielem)
+  activate PD
+  PD --> KD : true / false
+  deactivate PD
+end
+KD --> KD : wynik (boolean)
+deactivate KD
+
+alt wynik == false [brak uprawnień]
+  KD --> SP : BrakUprawnienException
+else wynik == true
+  KD --> SP : (dostęp przyznany)
+end
+deactivate KD
+
+@enduml

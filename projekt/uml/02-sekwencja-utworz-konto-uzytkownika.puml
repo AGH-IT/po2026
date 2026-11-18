@@ -1,0 +1,63 @@
+@startuml
+title Sekwencja: Utwórz konto użytkownika (tylko Administrator)
+
+actor "Administrator" as A
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant ":RejestrUzytkownikow" as RU
+participant ":UzytkownicyZapis" as ZK
+
+A -> UI : utwórz konto (login, hasło, rola)
+activate UI
+UI -> SP : utworzKonto(login, haslo, rola)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> KD : wymagajAdministratora(zalogowany)
+activate KD
+note right of KD
+  «include» Sprawdź prawa dostępu
+  (wariant: tylko administrator)
+end note
+
+alt zalogowany nie jest administratorem
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> A : "Konta może tworzyć tylko administrator"
+else administrator
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> RU : czyIstnieje(login)
+  activate RU
+  RU --> SP : true / false
+  deactivate RU
+  alt login zajęty
+    SP --> UI : BladOperacjiException("login jest już zajęty")
+    UI --> A : błąd
+  else login wolny
+    create "nowy :Uzytkownik" as UZ
+    SP -> UZ : new Uzytkownik(login, haslo, rola)
+    note right of UZ : konstruktor zapisuje hash hasła (BCrypt),\nnigdy jawny tekst
+    SP -> RU : dodaj(uzytkownik)
+    activate RU
+    RU --> SP
+    deactivate RU
+    SP -> SP : utworzKatalogDomowy(uzytkownik)
+    note right of SP
+      Tworzy /home/<login> z właścicielem = nowy użytkownik
+      i domyślnymi prawami (właściciel: wszystko, pozostali: ODCZYT, WYKONANIE).
+      Bez sprawdzania praw do /home: administrator już przeszedł wymagajAdministratora.
+    end note
+    SP -> ZK : zapisz(rejestr)
+    activate ZK
+    ZK --> SP
+    deactivate ZK
+    SP --> UI : uzytkownik
+    UI --> A : "Utworzono konto"
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

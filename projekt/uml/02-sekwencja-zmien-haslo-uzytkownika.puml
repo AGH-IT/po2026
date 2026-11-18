@@ -1,0 +1,53 @@
+@startuml
+title Sekwencja: Zmień hasło użytkownika (tylko Administrator)
+
+actor "Administrator" as A
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant ":RejestrUzytkownikow" as RU
+participant "uzytkownik :Uzytkownik" as UZ
+participant ":UzytkownicyZapis" as ZK
+
+A -> UI : zmień hasło (login, nowe hasło)
+activate UI
+UI -> SP : zmienHaslo(login, noweHaslo)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> KD : wymagajAdministratora(zalogowany)
+activate KD
+note right of KD : «include» Sprawdź prawa dostępu
+
+alt zalogowany nie jest administratorem
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> A : "Hasła może zmieniać tylko administrator"
+else administrator
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> RU : znajdz(login)
+  activate RU
+  RU --> SP : uzytkownik / null
+  deactivate RU
+  alt nie ma takiego użytkownika
+    SP --> UI : BladOperacjiException("nie ma takiego użytkownika")
+    UI --> A : błąd
+  else użytkownik istnieje
+    SP -> UZ : ustawHaslo(noweHaslo)
+    activate UZ
+    note right of UZ : podmienia hashHasla (BCrypt)
+    UZ --> SP
+    deactivate UZ
+    SP -> ZK : zapisz(rejestr)
+    activate ZK
+    ZK --> SP
+    deactivate ZK
+    SP --> UI : (ok)
+    UI --> A : "Zmieniono hasło"
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

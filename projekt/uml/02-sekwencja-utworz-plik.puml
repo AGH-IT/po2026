@@ -1,0 +1,57 @@
+@startuml
+title Sekwencja: Utwórz plik (w bieżącym katalogu)
+
+actor "Użytkownik" as U
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant "biezacyKatalog :Katalog" as K
+
+U -> UI : utwórz plik (nazwa, treść)
+activate UI
+UI -> SP : utworzPlik(nazwa, tresc)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> KD : wymagaj(zalogowany, biezacyKatalog, ZAPIS)
+activate KD
+note right of KD
+  «include» Sprawdź prawa dostępu
+  (szczegóły: 02-sekwencja-sprawdz-prawa-dostepu.puml)
+end note
+
+alt brak uprawnień do zapisu w katalogu
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> U : "Brak uprawnień do zapisu w tym katalogu"
+else uprawnienia są
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> K : znajdzDziecko(nazwa)
+  activate K
+  K --> SP : wezel / null
+  deactivate K
+  alt element o tej nazwie już istnieje
+    SP --> UI : BladOperacjiException("element już istnieje")
+    UI --> U : "Element o takiej nazwie już istnieje"
+  else nazwa wolna
+    create "nowy :Plik" as P
+    SP -> P : new Plik(nazwa, zalogowany, tresc)
+    activate P
+    create ":PrawaDostepu" as PD
+    P -> PD : new PrawaDostepu()
+    P --> SP : plik
+    deactivate P
+    SP -> K : dodajDziecko(plik)
+    activate K
+    K -> P : setRodzic(this)
+    K --> SP
+    deactivate K
+    SP --> UI : plik
+    UI --> U : "Utworzono plik"
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

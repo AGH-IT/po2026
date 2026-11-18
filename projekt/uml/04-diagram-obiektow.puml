@@ -1,0 +1,90 @@
+@startuml
+title Symulator Systemu Plików — diagram obiektów (migawka stanu w pamięci)
+
+object "sp : SystemPlikow" as sp
+
+object "rejestr : RejestrUzytkownikow" as rejestr
+
+object "root : Uzytkownik" as admin {
+  login = "root"
+  hashHasla = "$2a$10$N9qo8uLOickgx2ZMRZoMye..."
+  rola = ADMINISTRATOR
+}
+
+object "jan : Uzytkownik" as jan {
+  login = "jan"
+  hashHasla = "$2a$10$6KWBaIJo52xuaaeaUAWb3O..."
+  rola = UZYTKOWNIK
+}
+
+object "korzen : Katalog" as korzen {
+  nazwa = "/"
+}
+
+object "home : Katalog" as home {
+  nazwa = "home"
+}
+
+object "janDir : Katalog" as janDir {
+  nazwa = "jan"
+}
+
+object "notatki : Plik" as notatki {
+  nazwa = "notatki.txt"
+  tresc = "Kolokwium 12.11"
+}
+
+object "readme : Plik" as readme {
+  nazwa = "readme.txt"
+  tresc = "Symulator systemu plików"
+}
+
+object "prawaJanDir : PrawaDostepu" as prawaJanDir {
+  prawaWlasciciela = {ODCZYT, ZAPIS, WYKONANIE}
+  prawaPozostalych = {}
+}
+
+object "prawaNotatki : PrawaDostepu" as prawaNotatki {
+  prawaWlasciciela = {ODCZYT, ZAPIS}
+  prawaPozostalych = {ODCZYT}
+}
+
+' --- fasada ---
+sp *-- korzen : korzen
+sp --> janDir : biezacyKatalog
+sp --> jan : zalogowany
+sp *-- rejestr
+rejestr *-- admin
+rejestr *-- jan
+
+' --- drzewo ---
+korzen *-- home
+korzen *-- readme
+home *-- janDir
+janDir *-- notatki
+
+' --- właściciele (wspólne obiekty Uzytkownik) ---
+korzen --> admin : wlasciciel
+home --> admin : wlasciciel
+readme --> admin : wlasciciel
+janDir --> jan : wlasciciel
+notatki --> jan : wlasciciel
+
+' --- prawa (pozostałe węzły pominięte dla czytelności) ---
+janDir *-- prawaJanDir
+notatki *-- prawaNotatki
+
+note bottom of admin
+  Trzy węzły (korzen, home, readme) wskazują na
+  ten sam obiekt root. Dlatego w JSON-ie
+  zapisujemy tylko login właściciela (WezelDane),
+  a przy wczytaniu odtwarzamy referencję z rejestru.
+end note
+
+note right of sp
+  Stan po zalogowaniu jana i przejściu do /home/jan.
+  Jan jest właścicielem notatki.txt, więc ma ODCZYT i ZAPIS.
+  Administrator ma dostęp do wszystkiego niezależnie od bitów.
+end note
+
+@enduml

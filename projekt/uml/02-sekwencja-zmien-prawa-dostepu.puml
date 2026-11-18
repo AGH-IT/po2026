@@ -1,0 +1,41 @@
+@startuml
+title Sekwencja: Zmień prawa dostępu (tylko właściciel lub administrator)
+
+actor "Użytkownik" as U
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant "wezel :WezelSystemuPlikow" as W
+
+U -> UI : zmień prawa (ścieżka, nowe prawa)
+activate UI
+UI -> SP : zmienPrawa(sciezka, prawa)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> SP : znajdzWezel(sciezka)
+SP -> KD : wymagajWlascicielaLubAdministratora(zalogowany, wezel)
+activate KD
+note right of KD
+  «include» Sprawdź prawa dostępu
+  (wariant: właściciel węzła albo administrator)
+end note
+
+alt użytkownik nie jest właścicielem ani administratorem
+  KD --> SP : BrakUprawnienException
+  deactivate KD
+  SP --> UI : BrakUprawnienException
+  UI --> U : "Prawa może zmieniać tylko właściciel lub administrator"
+else właściciel lub administrator
+  KD --> SP : (dostęp przyznany)
+  deactivate KD
+  SP -> W : setPrawa(prawa)
+  activate W
+  W --> SP
+  deactivate W
+  SP --> UI : (ok)
+  UI --> U : "Zmieniono prawa dostępu"
+end
+deactivate SP
+deactivate UI
+
+@enduml

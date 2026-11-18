@@ -1,0 +1,83 @@
+@startuml
+title Sekwencja: Przenieś element (plik lub katalog) do innego katalogu
+
+actor "Użytkownik" as U
+participant "Interfejs\n(obsługa)" as UI
+participant ":SystemPlikow" as SP
+participant ":KontrolaDostepu" as KD
+participant "zrodlo :WezelSystemuPlikow" as Z
+participant "staryRodzic :Katalog" as SR
+participant "cel :Katalog" as C
+
+U -> UI : przenieś (ścieżka źródłowa, katalog docelowy)
+activate UI
+UI -> SP : przenies(sciezkaZrodlowa, sciezkaDocelowa)
+activate SP
+SP -> SP : wymagajZalogowanego()
+SP -> SP : znajdzWezel(sciezkaZrodlowa)
+note right of SP
+  znajdzWezel rzuca BladOperacjiException,
+  gdy ścieżka nie istnieje
+end note
+SP -> SP : znajdzWezel(sciezkaDocelowa)
+
+alt cel nie jest katalogiem
+  SP --> UI : BladOperacjiException("cel musi być katalogiem")
+  UI --> U : błąd
+else cel jest katalogiem
+  SP -> Z : getRodzic()
+  activate Z
+  Z --> SP : staryRodzic
+  deactivate Z
+
+  SP -> KD : wymagaj(zalogowany, staryRodzic, ZAPIS)
+  activate KD
+  SP -> KD : wymagaj(zalogowany, cel, ZAPIS)
+  note right of KD : «include» Sprawdź prawa dostępu (dwukrotnie)
+  alt brak uprawnień do katalogu źródłowego lub docelowego
+    KD --> SP : BrakUprawnienException
+    SP --> UI : BrakUprawnienException
+    UI --> U : "Brak uprawnień"
+  else uprawnienia są
+    KD --> SP : (dostęp przyznany)
+    deactivate KD
+
+    SP -> C : czyLezyWPoddrzewie(zrodlo)
+    activate C
+    C --> SP : true / false
+    deactivate C
+    alt cel leży w przenoszonym poddrzewie (cykl)
+      SP --> UI : BladOperacjiException("nie można przenieść katalogu do jego podkatalogu")
+      UI --> U : błąd
+    else brak cyklu
+      SP -> Z : getNazwa()
+      activate Z
+      Z --> SP : nazwa
+      deactivate Z
+      SP -> C : znajdzDziecko(nazwa)
+      activate C
+      C --> SP : wezel / null
+      deactivate C
+      alt w katalogu docelowym jest już element o tej nazwie
+        SP --> UI : BladOperacjiException("element już istnieje w katalogu docelowym")
+        UI --> U : błąd
+      else nazwa wolna
+        SP -> SR : usunDziecko(zrodlo)
+        activate SR
+        SR --> SP
+        deactivate SR
+        SP -> C : dodajDziecko(zrodlo)
+        activate C
+        C -> Z : setRodzic(cel)
+        C --> SP
+        deactivate C
+        SP --> UI : (ok)
+        UI --> U : "Przeniesiono"
+      end
+    end
+  end
+end
+deactivate SP
+deactivate UI
+
+@enduml

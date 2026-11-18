@@ -1,0 +1,324 @@
+@startuml
+title Symulator Systemu Plików — diagram klas
+skinparam classAttributeIconSize 0
+
+package "model" {
+
+  class SystemPlikow {
+    - korzen: Katalog
+    - biezacyKatalog: Katalog
+    - zalogowany: Uzytkownik
+    + {static} LOGIN_ROOT: String = "root"
+    + {static} NAZWA_KATALOGU_DOMOWEGO: String = "home"
+    + SystemPlikow(rejestr: RejestrUzytkownikow, zapisDrzewa: SystemPlikowZapis, zapisKont: UzytkownicyZapis)
+    + zainicjujAdministratora(haslo: String): Uzytkownik
+    + zaloguj(login: String, haslo: String): Uzytkownik
+    + wyloguj(): void
+    + utworzPlik(nazwa: String, tresc: String): Plik
+    + utworzKatalog(nazwa: String): Katalog
+    + usun(sciezka: String): void
+    + usunKatalogRekurencyjnie(sciezka: String): int
+    + przenies(sciezkaZrodlowa: String, sciezkaDocelowa: String): void
+    + zmienNazwe(sciezka: String, nowaNazwa: String): void
+    + przejdzDo(sciezka: String): void
+    + listuj(sciezka: String): List<WezelSystemuPlikow>
+    + odczytajPlik(sciezka: String): String
+    + zapiszPlik(sciezka: String, tresc: String): void
+    + zmienPrawa(sciezka: String, prawa: PrawaDostepu): void
+    + zmienWlasciciela(sciezka: String, nowyWlascicielLogin: String): void
+    + utworzKonto(login: String, haslo: String, rola: RolaUzytkownika): Uzytkownik
+    + zmienHaslo(login: String, noweHaslo: String): void
+    + zapiszDoPliku(plik: Path): void
+    + wczytajZPliku(plik: Path): void
+    + zapiszKatalogDomowy(plik: Path): void
+    + wczytajKatalogDomowy(plik: Path): void
+    + znajdzWezel(sciezka: String): WezelSystemuPlikow
+    - wymagajZalogowanego(): Uzytkownik
+    - utworzKatalogDomowy(uzytkownik: Uzytkownik): Katalog
+    - znajdzKatalogDomowy(uzytkownik: Uzytkownik): Katalog
+    - uzupelnijKatalogiDomowe(korzen: Katalog): void
+  }
+
+  abstract class WezelSystemuPlikow {
+    - nazwa: String
+    # WezelSystemuPlikow(nazwa: String, wlasciciel: Uzytkownik)
+    + getNazwa(): String
+    + ustawNazwe(nowaNazwa: String): void
+    + getSciezka(): String
+    + getRodzic(): Katalog
+    + setRodzic(rodzic: Katalog): void
+    + getWlasciciel(): Uzytkownik
+    + setWlasciciel(wlasciciel: Uzytkownik): void
+    + getPrawa(): PrawaDostepu
+    + setPrawa(prawa: PrawaDostepu): void
+    + czyLezyWPoddrzewie(korzenPoddrzewa: WezelSystemuPlikow): boolean
+    + {abstract} czyKatalog(): boolean
+    + {abstract} getRozmiar(): int
+  }
+
+  class Plik {
+    - tresc: String
+    + Plik(nazwa: String, wlasciciel: Uzytkownik, tresc: String)
+    + odczytaj(): String
+    + zapisz(tresc: String): void
+    + czyKatalog(): boolean
+    + getRozmiar(): int
+  }
+
+  class Katalog {
+    - dzieci: List<WezelSystemuPlikow>
+    + Katalog(nazwa: String, wlasciciel: Uzytkownik)
+    + dodajDziecko(wezel: WezelSystemuPlikow): void
+    + usunDziecko(wezel: WezelSystemuPlikow): void
+    + znajdzDziecko(nazwa: String): WezelSystemuPlikow
+    + getDzieci(): List<WezelSystemuPlikow>
+    + czyPusty(): boolean
+    + policzPotomkow(): int
+    + czyKatalog(): boolean
+    + getRozmiar(): int
+  }
+
+  class PrawaDostepu {
+    - prawaWlasciciela: Set<Uprawnienie>
+    - prawaPozostalych: Set<Uprawnienie>
+    + PrawaDostepu()
+    + czyPozwala(uprawnienie: Uprawnienie, jestWlascicielem: boolean): boolean
+    + nadaj(uprawnienie: Uprawnienie, dlaWlasciciela: boolean): void
+    + odbierz(uprawnienie: Uprawnienie, dlaWlasciciela: boolean): void
+    + getPrawaWlasciciela(): Set<Uprawnienie>
+    + getPrawaPozostalych(): Set<Uprawnienie>
+    + toString(): String
+  }
+
+  enum Uprawnienie {
+    ODCZYT
+    ZAPIS
+    WYKONANIE
+  }
+
+  class Uzytkownik {
+    - login: String
+    - hashHasla: String
+    - rola: RolaUzytkownika
+    + Uzytkownik(login: String, haslo: String, rola: RolaUzytkownika)
+    + sprawdzHaslo(proba: String): boolean
+    + ustawHaslo(noweHaslo: String): void
+    + czyAdministrator(): boolean
+    + getLogin(): String
+    + getRola(): RolaUzytkownika
+  }
+
+  enum RolaUzytkownika {
+    UZYTKOWNIK
+    ADMINISTRATOR
+  }
+
+  class RejestrUzytkownikow {
+    - uzytkownicy: Map<String, Uzytkownik>
+    + dodaj(uzytkownik: Uzytkownik): void
+    + znajdz(login: String): Uzytkownik
+    + czyIstnieje(login: String): boolean
+    + czyPusty(): boolean
+    + getUzytkownicy(): Collection<Uzytkownik>
+  }
+
+  class KontrolaDostepu {
+    + czyMaDostep(u: Uzytkownik, w: WezelSystemuPlikow, p: Uprawnienie): boolean
+    + wymagaj(u: Uzytkownik, w: WezelSystemuPlikow, p: Uprawnienie): void
+    + wymagajWlascicielaLubAdministratora(u: Uzytkownik, w: WezelSystemuPlikow): void
+    + wymagajAdministratora(u: Uzytkownik): void
+  }
+}
+
+package "wyjatki" {
+  class SystemPlikowException <<extends Exception>> {
+    + SystemPlikowException(komunikat: String)
+    + SystemPlikowException(komunikat: String, przyczyna: Throwable)
+  }
+  class BrakUprawnienException {
+    + BrakUprawnienException(komunikat: String)
+  }
+  class BladLogowaniaException {
+    + BladLogowaniaException(komunikat: String)
+  }
+  class BladOperacjiException {
+    + BladOperacjiException(komunikat: String)
+    + BladOperacjiException(komunikat: String, przyczyna: Throwable)
+  }
+}
+
+package "persystencja" {
+
+  class SystemPlikowZapis {
+    + SystemPlikowZapis()
+    + zapisz(katalog: Katalog, plik: Path): void
+    + wczytaj(rejestr: RejestrUzytkownikow, plik: Path): Katalog
+    + wczytajKatalog(wlasciciel: Uzytkownik, plik: Path): Katalog
+  }
+
+  class WezelDane {
+    + rodzaj: RodzajWezla
+    + nazwa: String
+    + wlascicielLogin: String
+    + prawaWlasciciela: Set<Uprawnienie>
+    + prawaPozostalych: Set<Uprawnienie>
+    + tresc: String
+    + dzieci: List<WezelDane>
+    + {static} zWezla(wezel: WezelSystemuPlikow): WezelDane
+    + doWezla(rejestr: RejestrUzytkownikow): WezelSystemuPlikow
+    + doWezlaZWlascicielem(wlasciciel: Uzytkownik): WezelSystemuPlikow
+  }
+
+  enum RodzajWezla {
+    PLIK
+    KATALOG
+  }
+
+  class UzytkownicyZapis {
+    - plik: Path
+    + UzytkownicyZapis(plik: Path)
+    + zapisz(rejestr: RejestrUzytkownikow): void
+    + wczytaj(): RejestrUzytkownikow
+  }
+}
+
+package "gui" {
+
+  class Aplikacja {
+    + {static} main(args: String[]): void
+    + start(okno: Stage): void
+  }
+
+  class LogowanieKontroler {
+    - system: SystemPlikow
+    + ustawSystem(system: SystemPlikow): void
+    + zaloguj(): void
+    + zainicjujAdministratora(): void
+  }
+
+  class GlownyKontroler {
+    - system: SystemPlikow
+    + ustawSystem(system: SystemPlikow): void
+    + odswiez(): void
+    + przejdzDo(): void
+    + utworzPlik(): void
+    + utworzKatalog(): void
+    + usun(): void
+    + przenies(): void
+    + zmienNazwe(): void
+    + zapiszTresc(): void
+    + zmienPrawa(): void
+    + zmienWlasciciela(): void
+    + zapiszKatalogDomowy(): void
+    + wczytajKatalogDomowy(): void
+    + otworzPanelAdministratora(): void
+    + wyloguj(): void
+  }
+
+  class AdministratorKontroler {
+    - system: SystemPlikow
+    + ustawSystem(system: SystemPlikow): void
+    + utworzKonto(): void
+    + zmienHaslo(): void
+    + zapiszDoPliku(): void
+    + wczytajZPliku(): void
+  }
+}
+
+' --- drzewo plików (wzorzec Composite) ---
+WezelSystemuPlikow <|-- Plik
+WezelSystemuPlikow <|-- Katalog
+Katalog "1" *-- "*" WezelSystemuPlikow : dzieci
+WezelSystemuPlikow "*" --> "0..1" Katalog : rodzic
+WezelSystemuPlikow *-- "1" PrawaDostepu
+WezelSystemuPlikow "*" --> "1" Uzytkownik : wlasciciel
+PrawaDostepu ..> Uprawnienie
+
+' --- konta ---
+Uzytkownik --> "1" RolaUzytkownika
+RejestrUzytkownikow *-- "*" Uzytkownik
+
+' --- fasada ---
+SystemPlikow *-- "1" Katalog : korzen
+SystemPlikow --> "1" Katalog : biezacyKatalog
+SystemPlikow --> "0..1" Uzytkownik : zalogowany
+SystemPlikow *-- "1" RejestrUzytkownikow
+SystemPlikow *-- "1" KontrolaDostepu
+SystemPlikow --> "1" SystemPlikowZapis
+SystemPlikow --> "1" UzytkownicyZapis
+
+' --- kontrola dostępu ---
+KontrolaDostepu ..> Uzytkownik
+KontrolaDostepu ..> WezelSystemuPlikow
+
+' --- wyjątki ---
+SystemPlikowException <|-- BrakUprawnienException
+SystemPlikowException <|-- BladLogowaniaException
+SystemPlikowException <|-- BladOperacjiException
+KontrolaDostepu ..> BrakUprawnienException : <<throws>>
+SystemPlikow ..> BladLogowaniaException : <<throws>>
+SystemPlikow ..> BladOperacjiException : <<throws>>
+
+' --- persystencja ---
+SystemPlikowZapis ..> WezelDane
+SystemPlikowZapis ..> Katalog
+SystemPlikowZapis ..> RejestrUzytkownikow
+WezelDane "1" *-- "*" WezelDane : dzieci
+WezelDane --> "1" RodzajWezla
+WezelDane ..> WezelSystemuPlikow
+UzytkownicyZapis ..> RejestrUzytkownikow
+UzytkownicyZapis ..> Uzytkownik : Gson wprost
+
+' --- gui (MVC: kontrolery znają model, model nie zna gui) ---
+Aplikacja --> "1" SystemPlikow : tworzy w start()
+Aplikacja ..> LogowanieKontroler
+LogowanieKontroler --> "1" SystemPlikow
+GlownyKontroler --> "1" SystemPlikow
+AdministratorKontroler --> "1" SystemPlikow
+LogowanieKontroler ..> GlownyKontroler : po zalogowaniu
+GlownyKontroler ..> AdministratorKontroler : tylko administrator
+
+note right of WezelSystemuPlikow
+  **Skąd ta klasa?**
+  Wzorzec Composite: Plik i Katalog są
+  traktowane jednolicie, a drzewo to
+  rekurencyjna kompozycja Katalog -> węzły.
+end note
+
+note left of KontrolaDostepu
+  **Skąd ta klasa?**
+  Przypadek użycia „Sprawdź prawa dostępu”
+  («include» w większości operacji) to osobna
+  odpowiedzialność (SRP). Tu też jest reguła
+  „tylko administrator” dla kont i zmiany właściciela.
+end note
+
+note bottom of SystemPlikow
+  **Decyzja: bez Singletona.**
+  Jeden obiekt SystemPlikow tworzy Aplikacja.start() i przekazuje go
+  kontrolerom (ustawSystem). Start programu:
+  konta (UzytkownicyZapis.wczytaj) -> new SystemPlikow(...) ->
+  jeśli rejestr pusty: zainicjujAdministratora(haslo) (konto "root") ->
+  logowanie -> opcjonalnie wczytajZPliku(plik) (tylko administrator).
+  Korzeń "/" i "/home" należą do root, "/home/<login>" do użytkownika.
+end note
+
+note bottom of GlownyKontroler
+  **Kontrolery FXML.** Widoki w plikach .fxml
+  (src/main/resources/systemplikow/gui/).
+  Pola @FXML z kontrolkami nie są rysowane.
+  Metody bez parametrów to obsługa przycisków:
+  czytają dane z kontrolek i wołają SystemPlikow,
+  a SystemPlikowException pokazują jako komunikat.
+end note
+
+note bottom of WezelDane
+  **Płaski format zapisu.**
+  Właściciel jest zapisywany jako login (String),
+  nie jako obiekt, więc użytkownik nie jest duplikowany
+  w JSON-ie. Przy odczycie loginy są „sklejane” z
+  RejestrUzytkownikow, więc wszystkie węzły danego
+  właściciela wskazują na ten sam obiekt.
+end note
+
+@enduml
