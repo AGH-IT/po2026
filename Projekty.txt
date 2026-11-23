@@ -94,7 +94,7 @@ Aleksandra Węgrzyn, Magdalena Kowalska
 
 Kategoria E: Propozycje własne studentów.
 41 ) System Do obsługi systemu RPG : Graficzna karta dla gracza (profil gracza/użytkownika) , obliczenia statystyk, generator postaci automatyczny i manualny, oraz generacja obiektów interaktywnych (profil Mistrza gry/administratora)
-Wiktor Kasprzak, [miejsce wolne]
+Wiktor Kasprzak, Michał Lewiński
 (Miejsce na własne tematy - dopiszcie temat i swoje imiona i nazwiska poniżej, zgodnie z zasadami zapisu z README.md)
 
 System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
