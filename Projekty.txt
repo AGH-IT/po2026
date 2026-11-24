@@ -74,8 +74,8 @@ Kategoria D: Systemy specjalistyczne i domenowe (Idealne na diagramy przypadków
 
 31) System Zarządzania Laboratorium Badawczym: Rezerwacja aparatury, próbki i ich cykl życia (pobranie -> analiza -> archiwizacja), harmonogram badań.
 
-32) System Obsługi Zgłoszeń Serwisowych (Helpdesk / Ticketing): Zgłoszenia z priorytetami i SLA, przypisywanie do zespołów, historia eskalacji.
-Daniel Florek, Bartosz Pomykała
+32) System Obsługi Zgłoszeń Serwisowych (Helpdesk / Ticketing): Zgłoszenia z priorytetami i SLA, przypisywanie do zespołów, historia eskalacji. Daniel Florek & Bartosz Pomykała
+
 33) System Zarządzania Flotą Dronów Dostawczych: Planowanie tras, monitoring baterii, przydział przesyłek i obsługa awarii w locie. Julia Stępak, Małgorzata Grzesik
 
 34) System Ewidencji Sprzętu Wypożyczanego na Uczelni (np. sprzęt AV, laboratoryjny): Rezerwacje, stan techniczny, protokoły wydania/zwrotu i kary za zniszczenia.
@@ -86,7 +86,7 @@ Mateusz Szymkiewicz, Kamil Kwiatkowski
 Grzegorz Scencelewicz, Bartosz Gąsior
 37) System Zarządzania Cyfrowym Archiwum Dokumentów: Wersjonowanie dokumentów, uprawnienia dostępu na poziomie działów, wyszukiwanie pełnotekstowe metadanych.
 
-38) System Planowania Produkcji Filmowej (Call Sheet Manager): Harmonogram zdjęciowy, dostępność aktorów/ekipy, lokacje i zależności między scenami.
+38) System Planowania Produkcji Filmowej (Call Sheet Manager): Harmonogram zdjęciowy, dostępność aktorów/ekipy, lokacje i zależności między scenami. Katarzyna Ogiela, Natalia Hamerlik
 
 39) System Zarządzania Programem Lojalnościowym Wielopoziomowym: Naliczanie punktów z różnych źródeł, progi poziomów, wygasanie punktów i katalog nagród.
 Aleksandra Węgrzyn, Magdalena Kowalska
@@ -94,7 +94,7 @@ Aleksandra Węgrzyn, Magdalena Kowalska
 
 Kategoria E: Propozycje własne studentów.
 41 ) System Do obsługi systemu RPG : Graficzna karta dla gracza (profil gracza/użytkownika) , obliczenia statystyk, generator postaci automatyczny i manualny, oraz generacja obiektów interaktywnych (profil Mistrza gry/administratora)
-Wiktor Kasprzak, [miejsce wolne]
+Wiktor Kasprzak, Michał Lewiński
 (Miejsce na własne tematy - dopiszcie temat i swoje imiona i nazwiska poniżej, zgodnie z zasadami zapisu z README.md)
 
 System Zarządzania Operacjami Płytowymi Lotniska: Miłosz Klasa, Paweł Kulik
