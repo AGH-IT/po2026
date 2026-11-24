@@ -82,6 +82,7 @@ package "model" {
     - prawaWlasciciela: Set<Uprawnienie>
     - prawaPozostalych: Set<Uprawnienie>
     + PrawaDostepu()
+    + PrawaDostepu(inne: PrawaDostepu)
     + czyPozwala(uprawnienie: Uprawnienie, jestWlascicielem: boolean): boolean
     + nadaj(uprawnienie: Uprawnienie, dlaWlasciciela: boolean): void
     + odbierz(uprawnienie: Uprawnienie, dlaWlasciciela: boolean): void
@@ -283,6 +284,13 @@ note right of WezelSystemuPlikow
   Wzorzec Composite: Plik i Katalog są
   traktowane jednolicie, a drzewo to
   rekurencyjna kompozycja Katalog -> węzły.
+end note
+
+note right of PrawaDostepu
+  **D34: prawa węzła są kopiowane.**
+  WezelSystemuPlikow.getPrawa() zwraca kopię,
+  setPrawa() zapisuje kopię (konstruktor kopiujący).
+  Prawa zmienia się tylko przez SystemPlikow.zmienPrawa.
 end note
 
 note left of KontrolaDostepu

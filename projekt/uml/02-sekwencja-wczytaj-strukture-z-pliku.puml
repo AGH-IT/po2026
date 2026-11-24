@@ -60,8 +60,9 @@ else administrator
         UI --> A : "Wczytanie przerwane: plik wskazuje nieistniejącego użytkownika"
       else właściciel znaleziony
         note right of WD
-          Tworzy Plik lub Katalog, odtwarza prawa
-          (nadaj / odbierz) i wlasciciela (referencja
+          Tworzy Plik lub Katalog, buduje osobny PrawaDostepu
+          (nadaj / odbierz), ustawia go przez setPrawa (D34:
+          getPrawa zwraca kopię) i wlasciciela (referencja
           do obiektu z rejestru), dodaje dzieci do katalogu.
         end note
       end

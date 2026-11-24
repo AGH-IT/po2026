@@ -31,7 +31,7 @@ else zwykły użytkownik
   note right of KD : jestWlascicielem = (wlasciciel == uzytkownik)
   KD -> W : getPrawa()
   activate W
-  W --> KD : prawa
+  W --> KD : prawa (kopia, D34)
   deactivate W
   KD -> PD : czyPozwala(uprawnienie, jestWlascicielem)
   activate PD

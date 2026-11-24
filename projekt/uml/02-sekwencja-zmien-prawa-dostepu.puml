@@ -30,6 +30,7 @@ else właściciel lub administrator
   deactivate KD
   SP -> W : setPrawa(prawa)
   activate W
+  note right of W : zapisuje kopię: new PrawaDostepu(prawa) (D34)
   W --> SP
   deactivate W
   SP --> UI : (ok)

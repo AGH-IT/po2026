@@ -24,7 +24,7 @@ kolumny, których zależności są już odhaczone. Po skończeniu zadania odhacz
 | ID | Programista A — drzewo i uprawnienia | Zależy od |
 |---|---|---|
 | A1 | [x] `Uprawnienie`, `PrawaDostepu` + testy `czyPozwala` | etap 0 |
-| A2 | [ ] `WezelSystemuPlikow`, `Plik`, `Katalog` + testy (`dodajDziecko` ustawia rodzica, `getSciezka`, `czyLezyWPoddrzewie`, `policzPotomkow`, `getRozmiar`) | A1, B1 (`Uzytkownik` jako właściciel) |
+| A2 | [ ] `WezelSystemuPlikow`, `Plik`, `Katalog` + testy (`dodajDziecko` ustawia rodzica, `getSciezka`, `czyLezyWPoddrzewie`, `policzPotomkow`, `getRozmiar`; `getPrawa` i `setPrawa` kopiują `PrawaDostepu`, D34) | A1, B1 (`Uzytkownik` jako właściciel) |
 
 | ID | Programista B — konta i wyjątki | Zależy od |
 |---|---|---|

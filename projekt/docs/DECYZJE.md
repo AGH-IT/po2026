@@ -63,6 +63,7 @@ i nie potwierdzone. **do uzupełnienia** = numer występuje w `PLAN.md`, ale tre
 | D31 | **Wyjątki są sprawdzane:** `SystemPlikowException extends Exception`. | przyjęte |
 | D32 | **Po zalogowaniu `biezacyKatalog` = `/home/<login>`.** Gdy katalogu domowego nie ma, `biezacyKatalog` = korzeń. | przyjęte |
 | D33 | **Po wczytaniu całości brakujące `/home` lub `/home/<login>` są dotwarzane** (`uzupelnijKatalogiDomowe`): `/home` należy do `root`, `/home/<login>` do konta, prawa domyślne. Węzeł `/home/<login>`, który nie jest katalogiem, przerywa wczytanie (`BladOperacjiException`). | przyjęte |
+| D34 | **`setPrawa` zapisuje kopię, `getPrawa` zwraca kopię** (`new PrawaDostepu(prawa)`, konstruktor kopiujący). `PrawaDostepu` jest mutowalna, więc węzeł nie współdzieli obiektu z wywołującym (np. GUI albo ten sam obiekt przekazany dla dwóch węzłów), a zmiana praw jest możliwa tylko przez `setPrawa`, czyli po sprawdzeniu `KontrolaDostepu` (reguła 3). Skutek: `wezel.getPrawa().nadaj(...)` nic nie zmienia. Żeby zmienić prawa, trzeba pobrać kopię, zmodyfikować ją i przekazać do `SystemPlikow.zmienPrawa`. Nowy węzeł dostaje domyślne prawa z konstruktora `PrawaDostepu()`. | propozycja (zmiana diagramu, wymaga zgody drugiej osoby, reguła 1) |
 
 ## Uproszczenia (świadome)
 
