@@ -111,3 +111,6 @@ Komunikator tekstowy klient-serwer z szyfrowaniem wiadomości z wykorzystaniem R
 
 51) Anonimowy czat wykładowy - anonimowe zadawanie pytań wykładowcy, ankieta poziomu zrozumienia
 Kamil Gawęda, Jakub Czupryna
+
+52) Symulator Lotniska Kraków - Balice
+Wojciech Młynarczyk, Wojciech Trzyna
