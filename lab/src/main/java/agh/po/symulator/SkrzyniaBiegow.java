@@ -12,7 +12,7 @@ public class SkrzyniaBiegow extends Komponent {
         this.aktualnyBieg = 0;
     }
     public void zwiekszBieg(){
-        if (aktualnyBieg < iloscBiegow){
+        if (aktualnyBieg < iloscBiegow) & {
             aktualnyBieg++;
         }
     }

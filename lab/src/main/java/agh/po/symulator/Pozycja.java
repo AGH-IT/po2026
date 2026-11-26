@@ -18,10 +18,30 @@ public class Pozycja {
         y += deltaY;
     }
 
+    public double getX(){
+        return x;
+    }
+    public double getY(){
+        return y;
+    }
+
+    public void przemiesc(double dt, double v, Pozycja cel) {
+        double droga = v * dt;
+        double odleglosc = Math.sqrt(Math.pow(getX() - cel.x, 2) + Math.pow(getY() - cel.y, 2));
+        double dx = v * dt * (cel.x - getX()) / odleglosc;
+        double dy = v * dt * (cel.y - getY()) / odleglosc;
+        if (droga > odleglosc) {
+            y = cel.y;
+            x = cel.x;
+        } else {
+            aktualizujPozycje(dx, dy);
+        }
+    }
     public String getPozycja() {
         return "(" + x + ", " + y + ")";
     }
 }
+
 
 
 
