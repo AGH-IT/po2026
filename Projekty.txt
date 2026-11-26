@@ -75,7 +75,7 @@ Kategoria D: Systemy specjalistyczne i domenowe (Idealne na diagramy przypadków
 31) System Zarządzania Laboratorium Badawczym: Rezerwacja aparatury, próbki i ich cykl życia (pobranie -> analiza -> archiwizacja), harmonogram badań.
 
 32) System Obsługi Zgłoszeń Serwisowych (Helpdesk / Ticketing): Zgłoszenia z priorytetami i SLA, przypisywanie do zespołów, historia eskalacji.
-
+Daniel Florek, Bartosz Pomykała
 33) System Zarządzania Flotą Dronów Dostawczych: Planowanie tras, monitoring baterii, przydział przesyłek i obsługa awarii w locie. Julia Stępak, Małgorzata Grzesik
 
 34) System Ewidencji Sprzętu Wypożyczanego na Uczelni (np. sprzęt AV, laboratoryjny): Rezerwacje, stan techniczny, protokoły wydania/zwrotu i kary za zniszczenia.
