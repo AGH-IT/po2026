@@ -14,7 +14,7 @@ public class Sprzeglo extends Komponent {
     public void zwolnij() {
         stanSprzegla = false;
     }
-    public boolean isWcisniete() {
+    public boolean wcisniete() {
         return stanSprzegla;
     }
 }

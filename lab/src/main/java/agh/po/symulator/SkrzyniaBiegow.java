@@ -12,13 +12,18 @@ public class SkrzyniaBiegow extends Komponent {
         this.aktualnyBieg = 0;
     }
     public void zwiekszBieg(){
-        if (aktualnyBieg < iloscBiegow) & {
+        if (aktualnyBieg < iloscBiegow){
             aktualnyBieg++;
         }
     }
     public void zmniejszBieg(){
         if(aktualnyBieg > 0 ) {
             aktualnyBieg--;
+        }
+    }
+    private void sprawdzSprzeglo(){
+        if (sprzeglo == null || !sprzeglo.wcisniete()){
+            throw new IllegalStateException("Nie można zmienić biegu bez wcisnietego sprzegła!");
         }
     }
     public void zeruj(){

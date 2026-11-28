@@ -26,14 +26,24 @@ public class Pozycja {
     }
 
     public void przemiesc(double dt, double v, Pozycja cel) {
+        if (cel == null || v == 0 || dt == 0) {
+            return;
+        }
+
+        double odleglosc = Math.sqrt(Math.pow(cel.x - x, 2) + Math.pow(cel.y - y, 2));
+
+        if (odleglosc == 0) {
+            return;
+        }
+
         double droga = v * dt;
-        double odleglosc = Math.sqrt(Math.pow(getX() - cel.x, 2) + Math.pow(getY() - cel.y, 2));
-        double dx = v * dt * (cel.x - getX()) / odleglosc;
-        double dy = v * dt * (cel.y - getY()) / odleglosc;
-        if (droga > odleglosc) {
-            y = cel.y;
-            x = cel.x;
+
+        if (droga >= odleglosc) {
+            this.x = cel.x;
+            this.y = cel.y;
         } else {
+            double dx = droga * (cel.x - x) / odleglosc;
+            double dy = droga * (cel.y - y) / odleglosc;
             aktualizujPozycje(dx, dy);
         }
     }
